@@ -7,13 +7,16 @@ package MedicinasKabinetaPacientuSistema;
 import dao.LietotajsDAO;
 import dao.ViziteDAO;
 import db.DatabaseManager;
+import dao.RecepteDAO;
 
 import model.Lietotajs;
 import model.Vizite;
+import model.Recepte;
 
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
 
 import java.awt.Color;
 import java.awt.GridLayout;
@@ -21,6 +24,8 @@ import java.awt.GridLayout;
 import java.time.LocalDate;
 import java.time.YearMonth;
 import java.time.format.DateTimeFormatter;
+
+import java.text.SimpleDateFormat;
 
 import java.util.Calendar;
 import java.util.Date;
@@ -38,6 +43,7 @@ public class FormDBSystemGUI extends javax.swing.JFrame {
     private Lietotajs loggedInUser;
     private final LietotajsDAO userDAO = new LietotajsDAO();
     private final ViziteDAO viziteDAO = new ViziteDAO();
+    private final RecepteDAO recepteDAO = new RecepteDAO();
 
     private Lietotajs calendarDoctor;
     private YearMonth displayedMonth = YearMonth.now();
@@ -158,7 +164,7 @@ public class FormDBSystemGUI extends javax.swing.JFrame {
         txtGreetingMain1 = new javax.swing.JLabel();
         txtRole1 = new javax.swing.JLabel();
         jPanel3 = new javax.swing.JPanel();
-        btnBeggining1 = new javax.swing.JButton();
+        btnRecept = new javax.swing.JButton();
         btnVisits1 = new javax.swing.JButton();
         btnPatients1 = new javax.swing.JButton();
         btnExit1 = new javax.swing.JButton();
@@ -989,12 +995,12 @@ public class FormDBSystemGUI extends javax.swing.JFrame {
 
         jPanel3.setBorder(javax.swing.BorderFactory.createEtchedBorder());
 
-        btnBeggining1.setForeground(new java.awt.Color(23, 71, 122));
-        btnBeggining1.setText("\t🏠 Sākums");
-        btnBeggining1.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(23, 71, 122)));
-        btnBeggining1.addActionListener(new java.awt.event.ActionListener() {
+        btnRecept.setForeground(new java.awt.Color(23, 71, 122));
+        btnRecept.setText("Receptes");
+        btnRecept.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(23, 71, 122)));
+        btnRecept.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnBeggining1ActionPerformed(evt);
+                btnReceptActionPerformed(evt);
             }
         });
 
@@ -1038,7 +1044,7 @@ public class FormDBSystemGUI extends javax.swing.JFrame {
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
                         .addGap(0, 0, Short.MAX_VALUE)
                         .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(btnBeggining1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 129, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(btnRecept, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 129, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(btnPatients1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 129, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(btnExit1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 129, javax.swing.GroupLayout.PREFERRED_SIZE))))
                 .addContainerGap())
@@ -1047,7 +1053,7 @@ public class FormDBSystemGUI extends javax.swing.JFrame {
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel3Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(btnBeggining1, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(btnRecept, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(btnVisits1, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
@@ -1232,6 +1238,11 @@ public class FormDBSystemGUI extends javax.swing.JFrame {
         btnHistoryClose.setForeground(new java.awt.Color(255, 255, 255));
         btnHistoryClose.setText("Aizvērt");
         btnHistoryClose.setPreferredSize(new java.awt.Dimension(200, 45));
+        btnHistoryClose.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnHistoryCloseActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout HistoryDialogWinLayout = new javax.swing.GroupLayout(HistoryDialogWin.getContentPane());
         HistoryDialogWin.getContentPane().setLayout(HistoryDialogWinLayout);
@@ -2032,44 +2043,43 @@ public class FormDBSystemGUI extends javax.swing.JFrame {
 
         loggedInUser = user;
 
-        
         txtName1.setText(user.getVards() + " " + user.getUzvards());
         txtRole1.setText(user.getLoma());
         txtGreetingMain1.setText("Labdien, " + user.getVards() + "!");
 
         String role = user.getLoma();
 
-       switch (role) {
-    case "Pacients":
-    case "Ārsts":
-        
-        txtName1.setText(user.getVards() + " " + user.getUzvards());
-        txtRole1.setText(user.getLoma());
-        txtGreetingMain1.setText("Labdien, " + user.getVards() + "!");
+        switch (role) {
+            case "Pacients":
+            case "Ārsts":
 
-        PacientMainDialogWin.pack();
-        PacientMainDialogWin.setLocationRelativeTo(this);
-        PacientMainDialogWin.setVisible(true);
-        break;
+                txtName1.setText(user.getVards() + " " + user.getUzvards());
+                txtRole1.setText(user.getLoma());
+                txtGreetingMain1.setText("Labdien, " + user.getVards() + "!");
 
-    case "Administrators":
-        
-        txtName.setText(user.getVards() + " " + user.getUzvards());
-        txtRole.setText(user.getLoma());
-        txtGreetingMain.setText("Labdien, " + user.getVards() + "!");
+                PacientMainDialogWin.pack();
+                PacientMainDialogWin.setLocationRelativeTo(this);
+                PacientMainDialogWin.setVisible(true);
+                break;
 
-        AdminMainDialogWin.pack();
-        AdminMainDialogWin.setLocationRelativeTo(this);
-        AdminMainDialogWin.setVisible(true);
-        break;
+            case "Administrators":
 
-    default:
-        JOptionPane.showMessageDialog(
-                this,
-                "Nezināma lietotāja loma!"
-        );
-        return;
-}
+                txtName.setText(user.getVards() + " " + user.getUzvards());
+                txtRole.setText(user.getLoma());
+                txtGreetingMain.setText("Labdien, " + user.getVards() + "!");
+
+                AdminMainDialogWin.pack();
+                AdminMainDialogWin.setLocationRelativeTo(this);
+                AdminMainDialogWin.setVisible(true);
+                break;
+
+            default:
+                JOptionPane.showMessageDialog(
+                        this,
+                        "Nezināma lietotāja loma!"
+                );
+                return;
+        }
 
         LoginDialogWin.setVisible(false);
 
@@ -2088,9 +2098,13 @@ public class FormDBSystemGUI extends javax.swing.JFrame {
 
     }//GEN-LAST:event_btnAssignCancelActionPerformed
 
-    private void btnBeggining1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBeggining1ActionPerformed
+    private void btnReceptActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnReceptActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_btnBeggining1ActionPerformed
+        loadPrescriptions();
+        PrescriptionDialogWin.pack();
+        PrescriptionDialogWin.setLocationRelativeTo(this);
+        PrescriptionDialogWin.setVisible(true);
+    }//GEN-LAST:event_btnReceptActionPerformed
 
     private void btnVisits1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVisits1ActionPerformed
         // TODO add your handling code here:
@@ -2099,6 +2113,21 @@ public class FormDBSystemGUI extends javax.swing.JFrame {
 
     private void btnPatients1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPatients1ActionPerformed
         // TODO add your handling code here:
+        DefaultTableModel model
+                = (DefaultTableModel) tableVisitHistory.getModel();
+
+        model.setRowCount(0);
+
+        List<Object[]> visits
+                = viziteDAO.getPastVisitsByPatientId(loggedInUser.getId());
+
+        for (Object[] visit : visits) {
+            model.addRow(visit);
+        }
+
+        HistoryDialogWin.setSize(600, 600);
+        HistoryDialogWin.setLocationRelativeTo(this);
+        HistoryDialogWin.setVisible(true);
     }//GEN-LAST:event_btnPatients1ActionPerformed
 
     private void btnExit1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnExit1ActionPerformed
@@ -2195,6 +2224,11 @@ public class FormDBSystemGUI extends javax.swing.JFrame {
     private void DoctorMainDialogWinWindowClosing(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_DoctorMainDialogWinWindowClosing
         // TODO add your handling code here:
     }//GEN-LAST:event_DoctorMainDialogWinWindowClosing
+
+    private void btnHistoryCloseActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnHistoryCloseActionPerformed
+        // TODO add your handling code here:
+        HistoryDialogWin.setVisible(false);
+    }//GEN-LAST:event_btnHistoryCloseActionPerformed
 
     private void openCalendar() {
 
@@ -2365,6 +2399,44 @@ public class FormDBSystemGUI extends javax.swing.JFrame {
         panelCalendarGrid.repaint();
     }
 
+    private void loadPrescriptions() {
+        DefaultTableModel model
+                = (DefaultTableModel) tablePrescriptions.getModel();
+
+        // Notīrām tabulu
+        model.setRowCount(0);
+
+        List<Recepte> receptes
+                = recepteDAO.getReceptesByPacientsId(loggedInUser.getId());
+
+        Lietotajs doctor
+                = userDAO.findDoctorByPatientId(loggedInUser.getId());
+
+        String doctorName = "—";
+
+        if (doctor != null) {
+            doctorName = doctor.getVards() + " " + doctor.getUzvards();
+        }
+
+        SimpleDateFormat dateFormat
+                = new SimpleDateFormat("dd.MM.yyyy");
+
+        for (Recepte recepte : receptes) {
+            String date = "";
+
+            if (recepte.getIzsniegsanasDatums() != null) {
+                date = dateFormat.format(
+                        recepte.getIzsniegsanasDatums());
+            }
+
+            model.addRow(new Object[]{
+                recepte.getMedikamentaNosaukums(),
+                doctorName,
+                date
+            });
+        }
+    }
+
     private void bookAppointment(LocalDate date) {
 
         if (calendarDoctor == null || loggedInUser == null) {
@@ -2488,7 +2560,6 @@ public class FormDBSystemGUI extends javax.swing.JFrame {
     private javax.swing.JButton btnAssignCancel;
     private javax.swing.JButton btnAssignConfirm;
     private javax.swing.JButton btnBeggining;
-    private javax.swing.JButton btnBeggining1;
     private javax.swing.JButton btnBeggining2;
     private javax.swing.JButton btnCalendarNext;
     private javax.swing.JButton btnCalendarPrev;
@@ -2506,6 +2577,7 @@ public class FormDBSystemGUI extends javax.swing.JFrame {
     private javax.swing.JButton btnPatients2;
     private javax.swing.JButton btnPrescriptionClose;
     private javax.swing.JButton btnPrescriptionView;
+    private javax.swing.JButton btnRecept;
     private javax.swing.JButton btnRegUser;
     private javax.swing.JButton btnRegister;
     private javax.swing.JButton btnRegisterBack;
