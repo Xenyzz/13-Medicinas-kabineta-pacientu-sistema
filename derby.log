@@ -1,0 +1,13 @@
+----------------------------------------------------------------
+Fri Oct 23 12:24:47 EEST 2026:
+Booting Derby version The Apache Software Foundation - Apache Derby - 10.17.1.0 - (1913217): instance a816c00e-01a1-6813-c0f3-00000f9c1ff0 
+on database directory D:\Users\Kirills.Salkovskis\Downloads\13-Medicinas-kabineta-pacientu-sistema-master (1)\13-Medicinas-kabineta-pacientu-sistema-master\database\med_db with class loader jdk.internal.loader.ClassLoaders$AppClassLoader@33909752 
+Loaded from file:/D:/Users/Kirills.Salkovskis/Downloads/13-Medicinas-kabineta-pacientu-sistema-master%20(1)/13-Medicinas-kabineta-pacientu-sistema-master/src/lib/derby.jar
+java.vendor=Oracle Corporation
+java.runtime.version=21.0.6+8-LTS-188
+user.dir=D:\Users\Kirills.Salkovskis\Downloads\13-Medicinas-kabineta-pacientu-sistema-master (1)\13-Medicinas-kabineta-pacientu-sistema-master
+os.name=Windows 10
+os.arch=amd64
+os.version=10.0
+derby.system.home=null
+Database Class Loader started - derby.database.classpath=''
