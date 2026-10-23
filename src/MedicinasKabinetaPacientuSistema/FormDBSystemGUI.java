@@ -33,6 +33,8 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Locale;
 import java.util.Set;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  *
@@ -44,7 +46,7 @@ public class FormDBSystemGUI extends javax.swing.JFrame {
     private final LietotajsDAO userDAO = new LietotajsDAO();
     private final ViziteDAO viziteDAO = new ViziteDAO();
     private final RecepteDAO recepteDAO = new RecepteDAO();
-
+    private boolean doctorCalendarMode = false;
     private Lietotajs calendarDoctor;
     private YearMonth displayedMonth = YearMonth.now();
 
@@ -239,7 +241,7 @@ public class FormDBSystemGUI extends javax.swing.JFrame {
         txtRole2 = new javax.swing.JLabel();
         jPanel5 = new javax.swing.JPanel();
         btnBeggining2 = new javax.swing.JButton();
-        btnVisits2 = new javax.swing.JButton();
+        btnVisitsDoc = new javax.swing.JButton();
         btnPatients2 = new javax.swing.JButton();
         btnExit2 = new javax.swing.JButton();
         BtnLoginForm = new javax.swing.JButton();
@@ -923,18 +925,6 @@ public class FormDBSystemGUI extends javax.swing.JFrame {
             .addGroup(CalendarDialogWinLayout.createSequentialGroup()
                 .addGroup(CalendarDialogWinLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(CalendarDialogWinLayout.createSequentialGroup()
-                        .addGap(25, 25, 25)
-                        .addComponent(txtCalendarHeading))
-                    .addGroup(CalendarDialogWinLayout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(txtCalendarDoctorLabel)
-                        .addGap(32, 32, 32)
-                        .addComponent(comboCalendarDoctor, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(50, 50, 50)
-                        .addComponent(btnCalendarPrev, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(btnCalendarNext, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(CalendarDialogWinLayout.createSequentialGroup()
                         .addGap(29, 29, 29)
                         .addGroup(CalendarDialogWinLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(panelCalendarHeader, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -949,7 +939,22 @@ public class FormDBSystemGUI extends javax.swing.JFrame {
                                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                         .addComponent(txtLegendBusy))
                                     .addComponent(panelCalendarGrid, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addGap(0, 0, Short.MAX_VALUE)))))
+                                .addGap(0, 0, Short.MAX_VALUE))))
+                    .addGroup(CalendarDialogWinLayout.createSequentialGroup()
+                        .addGroup(CalendarDialogWinLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(CalendarDialogWinLayout.createSequentialGroup()
+                                .addGap(25, 25, 25)
+                                .addComponent(txtCalendarHeading))
+                            .addGroup(CalendarDialogWinLayout.createSequentialGroup()
+                                .addContainerGap()
+                                .addComponent(txtCalendarDoctorLabel)
+                                .addGap(32, 32, 32)
+                                .addComponent(comboCalendarDoctor, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(37, 37, 37)
+                                .addComponent(btnCalendarPrev, javax.swing.GroupLayout.PREFERRED_SIZE, 47, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(btnCalendarNext, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap(31, Short.MAX_VALUE))
         );
         CalendarDialogWinLayout.setVerticalGroup(
@@ -1794,12 +1799,12 @@ public class FormDBSystemGUI extends javax.swing.JFrame {
             }
         });
 
-        btnVisits2.setForeground(new java.awt.Color(23, 71, 122));
-        btnVisits2.setText("\t📅 Vizītes");
-        btnVisits2.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(23, 71, 122)));
-        btnVisits2.addActionListener(new java.awt.event.ActionListener() {
+        btnVisitsDoc.setForeground(new java.awt.Color(23, 71, 122));
+        btnVisitsDoc.setText("\t📅 Vizītes");
+        btnVisitsDoc.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(23, 71, 122)));
+        btnVisitsDoc.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnVisits2ActionPerformed(evt);
+                btnVisitsDocActionPerformed(evt);
             }
         });
 
@@ -1829,7 +1834,7 @@ public class FormDBSystemGUI extends javax.swing.JFrame {
                 .addContainerGap()
                 .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel5Layout.createSequentialGroup()
-                        .addComponent(btnVisits2, javax.swing.GroupLayout.PREFERRED_SIZE, 129, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(btnVisitsDoc, javax.swing.GroupLayout.PREFERRED_SIZE, 129, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(0, 0, Short.MAX_VALUE))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel5Layout.createSequentialGroup()
                         .addGap(0, 0, Short.MAX_VALUE)
@@ -1845,7 +1850,7 @@ public class FormDBSystemGUI extends javax.swing.JFrame {
                 .addContainerGap()
                 .addComponent(btnBeggining2, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
-                .addComponent(btnVisits2, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(btnVisitsDoc, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(btnPatients2, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
@@ -2017,6 +2022,10 @@ public class FormDBSystemGUI extends javax.swing.JFrame {
 
     private void btnExitActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnExitActionPerformed
         // TODO add your handling code here:
+        loggedInUser = null;
+
+        AdminMainDialogWin.setVisible(false);
+        LoginDialogWin.setVisible(true);
     }//GEN-LAST:event_btnExitActionPerformed
 
     private void BtnLoginFormActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnLoginFormActionPerformed
@@ -2051,8 +2060,6 @@ public class FormDBSystemGUI extends javax.swing.JFrame {
 
         switch (role) {
             case "Pacients":
-            case "Ārsts":
-
                 txtName1.setText(user.getVards() + " " + user.getUzvards());
                 txtRole1.setText(user.getLoma());
                 txtGreetingMain1.setText("Labdien, " + user.getVards() + "!");
@@ -2060,6 +2067,16 @@ public class FormDBSystemGUI extends javax.swing.JFrame {
                 PacientMainDialogWin.pack();
                 PacientMainDialogWin.setLocationRelativeTo(this);
                 PacientMainDialogWin.setVisible(true);
+
+                break;
+            case "Ārsts":
+                txtName2.setText(user.getVards() + " " + user.getUzvards());
+                txtRole2.setText(user.getLoma());
+                txtGreetingMain2.setText("Labdien, " + user.getVards() + "!");
+
+                DoctorMainDialogWin.pack();
+                DoctorMainDialogWin.setLocationRelativeTo(this);
+                DoctorMainDialogWin.setVisible(true);
                 break;
 
             case "Administrators":
@@ -2132,6 +2149,9 @@ public class FormDBSystemGUI extends javax.swing.JFrame {
 
     private void btnExit1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnExit1ActionPerformed
         // TODO add your handling code here:
+        loggedInUser = null;
+        PacientMainDialogWin.setVisible(false);
+        LoginDialogWin.setVisible(true);
     }//GEN-LAST:event_btnExit1ActionPerformed
 
     private void PacientMainDialogWinWindowClosing(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_PacientMainDialogWinWindowClosing
@@ -2209,9 +2229,10 @@ public class FormDBSystemGUI extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_btnBeggining2ActionPerformed
 
-    private void btnVisits2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVisits2ActionPerformed
+    private void btnVisitsDocActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVisitsDocActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_btnVisits2ActionPerformed
+        openCalendar();
+    }//GEN-LAST:event_btnVisitsDocActionPerformed
 
     private void btnPatients2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPatients2ActionPerformed
         // TODO add your handling code here:
@@ -2219,6 +2240,9 @@ public class FormDBSystemGUI extends javax.swing.JFrame {
 
     private void btnExit2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnExit2ActionPerformed
         // TODO add your handling code here:
+        loggedInUser = null;
+        DoctorMainDialogWin.setVisible(false);
+        LoginDialogWin.setVisible(true);
     }//GEN-LAST:event_btnExit2ActionPerformed
 
     private void DoctorMainDialogWinWindowClosing(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_DoctorMainDialogWinWindowClosing
@@ -2232,23 +2256,34 @@ public class FormDBSystemGUI extends javax.swing.JFrame {
 
     private void openCalendar() {
 
-        if (loggedInUser == null
-                || !"Pacients".equals(loggedInUser.getLoma())) {
-
-            JOptionPane.showMessageDialog(
-                    this,
-                    "Kalendārs pieejams tikai pacientiem."
-            );
+        if (loggedInUser == null) {
             return;
         }
 
-        calendarDoctor
-                = userDAO.findDoctorByPatientId(loggedInUser.getId());
+        String role = loggedInUser.getLoma();
 
-        if (calendarDoctor == null) {
+        if ("Pacients".equals(role)) {
+            doctorCalendarMode = false;
+
+            calendarDoctor
+                    = userDAO.findDoctorByPatientId(loggedInUser.getId());
+
+            if (calendarDoctor == null) {
+                JOptionPane.showMessageDialog(
+                        this,
+                        "Jums nav piesaistīts ārsts!"
+                );
+                return;
+            }
+
+        } else if ("Ārsts".equals(role)) {
+            doctorCalendarMode = true;
+            calendarDoctor = loggedInUser;
+
+        } else {
             JOptionPane.showMessageDialog(
                     this,
-                    "Jums nav piesaistīts ārsts!"
+                    "Kalendārs pieejams tikai pacientiem un ārstiem."
             );
             return;
         }
@@ -2267,128 +2302,167 @@ public class FormDBSystemGUI extends javax.swing.JFrame {
         renderCalendar();
 
         CalendarDialogWin.pack();
-        CalendarDialogWin.setLocationRelativeTo(PacientMainDialogWin);
+
+        if (doctorCalendarMode) {
+            CalendarDialogWin.setLocationRelativeTo(DoctorMainDialogWin);
+        } else {
+            CalendarDialogWin.setLocationRelativeTo(PacientMainDialogWin);
+        }
+
         CalendarDialogWin.setVisible(true);
     }
 
     private void renderCalendar() {
 
-        if (calendarDoctor == null) {
+        if (calendarDoctor == null || loggedInUser == null) {
             return;
         }
 
-        DateTimeFormatter formatter
-                = DateTimeFormatter.ofPattern(
-                        "LLLL yyyy",
-                        new Locale("lv", "LV")
-                );
+        Locale locale = new Locale("lv", "LV");
 
-        String monthTitle
-                = displayedMonth.format(formatter);
+        DateTimeFormatter formatter
+                = DateTimeFormatter.ofPattern("LLLL yyyy", locale);
+
+        String monthTitle = displayedMonth.format(formatter);
 
         txtCalendarHeading.setText(
-                monthTitle.substring(0, 1).toUpperCase(
-                        new Locale("lv", "LV")
-                ) + monthTitle.substring(1)
+                monthTitle.substring(0, 1).toUpperCase(locale)
+                + monthTitle.substring(1)
         );
 
         panelCalendarGrid.removeAll();
-        panelCalendarGrid.setLayout(
-                new GridLayout(6, 7, 4, 4)
-        );
+        panelCalendarGrid.setLayout(new GridLayout(6, 7, 4, 4));
 
-        // Iegūstam aizņemtos datumus no datubāzes.
-        List<Date> occupiedDates
-                = viziteDAO.getOccupiedDates(calendarDoctor.getId());
+        List<Vizite> visits;
+
+        if (doctorCalendarMode) {
+            visits = viziteDAO.getVisitsByDoctorId(
+                    loggedInUser.getId()
+            );
+        } else {
+            visits = viziteDAO.getVisitsByPatientId(
+                    loggedInUser.getId()
+            );
+        }
+
+        Map<LocalDate, Vizite> visitsByDate = new HashMap<>();
+
+        for (Vizite visit : visits) {
+            if (visit.getDatumsLaiks() != null) {
+                LocalDate visitDate
+                        = toLocalDate(visit.getDatumsLaiks());
+
+                visitsByDate.put(visitDate, visit);
+            }
+        }
 
         Set<LocalDate> occupiedDays = new HashSet<>();
 
-        for (Date date : occupiedDates) {
+        for (Date date : viziteDAO.getOccupiedDates(
+                calendarDoctor.getId())) {
 
-            Calendar cal = Calendar.getInstance();
-            cal.setTime(date);
-
-            LocalDate localDate = LocalDate.of(
-                    cal.get(Calendar.YEAR),
-                    cal.get(Calendar.MONTH) + 1,
-                    cal.get(Calendar.DAY_OF_MONTH)
-            );
-
-            occupiedDays.add(localDate);
+            occupiedDays.add(toLocalDate(date));
         }
 
         LocalDate today = LocalDate.now();
-
-        // Kalendārā pirmā kolonna ir svētdiena.
         LocalDate firstDay = displayedMonth.atDay(1);
 
         int offset = firstDay.getDayOfWeek().getValue() % 7;
 
-        // Tukšās šūnas pirms mēneša pirmās dienas.
         for (int i = 0; i < offset; i++) {
             panelCalendarGrid.add(new JLabel(""));
         }
 
-        // Mēneša dienas.
         for (int day = 1;
                 day <= displayedMonth.lengthOfMonth();
                 day++) {
 
             LocalDate date = displayedMonth.atDay(day);
 
-            JButton dayButton = new JButton(
-                    String.valueOf(day)
-            );
+            JButton dayButton = new JButton(String.valueOf(day));
 
             dayButton.setFocusPainted(false);
             dayButton.setOpaque(true);
             dayButton.setContentAreaFilled(true);
             dayButton.setBorderPainted(false);
 
-            boolean occupied = occupiedDays.contains(date);
             boolean futureDate = date.isAfter(today);
+            boolean occupied = occupiedDays.contains(date);
 
-            if (occupied) {
+            Vizite visit = visitsByDate.get(date);
 
-                dayButton.setBackground(
-                        new Color(235, 100, 100)
+            boolean pending = visit != null
+                    && !visit.isIrApstiprinats();
+
+            boolean confirmed = visit != null
+                    && visit.isIrApstiprinats();
+
+            if (!futureDate) {
+
+                dayButton.setBackground(new Color(220, 220, 220));
+                dayButton.setForeground(Color.GRAY);
+                dayButton.setToolTipText("Pagājis datums");
+
+            } else if (visit != null && pending) {
+
+                dayButton.setBackground(new Color(255, 220, 100));
+                dayButton.setForeground(Color.BLACK);
+                dayButton.setToolTipText(
+                        doctorCalendarMode
+                                ? "Gaida ārsta apstiprinājumu"
+                                : "Jūsu vizīte gaida apstiprinājumu"
                 );
 
+            } else if (visit != null && confirmed) {
+
+                dayButton.setBackground(new Color(235, 100, 100));
+                dayButton.setForeground(Color.WHITE);
+                dayButton.setToolTipText(
+                        doctorCalendarMode
+                                ? "Vizīte apstiprināta"
+                                : "Jūsu vizīte ir apstiprināta"
+                );
+
+            } else if (occupied) {
+
+                dayButton.setBackground(new Color(235, 100, 100));
                 dayButton.setForeground(Color.WHITE);
                 dayButton.setToolTipText("Aizņemts");
 
-            } else if (futureDate) {
-
-                dayButton.setBackground(
-                        new Color(120, 210, 140)
-                );
-
-                dayButton.setForeground(Color.BLACK);
-                dayButton.setToolTipText("Pieejams");
-
             } else {
 
-                dayButton.setBackground(
-                        new Color(220, 220, 220)
-                );
-
-                dayButton.setForeground(Color.GRAY);
-                dayButton.setToolTipText(
-                        "Šis datums nav pieejams"
-                );
+                dayButton.setBackground(new Color(120, 210, 140));
+                dayButton.setForeground(Color.BLACK);
+                dayButton.setToolTipText("Pieejams");
             }
 
-            // Tikai nākotnes un neaizņemtās dienas ir klikšķināmas.
-            dayButton.setEnabled(!occupied && futureDate);
+            boolean clickable;
+
+            if (doctorCalendarMode) {
+                clickable = futureDate && pending;
+            } else {
+                clickable = futureDate
+                        && (visit != null || !occupied);
+            }
+
+            dayButton.setEnabled(clickable);
+
+            Vizite selectedVisit = visit;
 
             dayButton.addActionListener(e -> {
-                bookAppointment(date);
+
+                if (doctorCalendarMode) {
+                    confirmAppointment(selectedVisit);
+                } else if (selectedVisit != null) {
+                    cancelAppointment(selectedVisit);
+                } else {
+                    bookAppointment(date);
+                }
             });
 
             panelCalendarGrid.add(dayButton);
         }
 
-        // Aizpildām atlikušās šūnas, lai saglabātu 6 x 7 režģi.
         int totalCells = offset + displayedMonth.lengthOfMonth();
 
         for (int i = totalCells; i < 42; i++) {
@@ -2397,6 +2471,109 @@ public class FormDBSystemGUI extends javax.swing.JFrame {
 
         panelCalendarGrid.revalidate();
         panelCalendarGrid.repaint();
+    }
+
+    private LocalDate toLocalDate(Date date) {
+        Calendar cal = Calendar.getInstance();
+        cal.setTime(date);
+
+        return LocalDate.of(
+                cal.get(Calendar.YEAR),
+                cal.get(Calendar.MONTH) + 1,
+                cal.get(Calendar.DAY_OF_MONTH)
+        );
+    }
+
+    private void cancelAppointment(Vizite visit) {
+
+        if (visit == null || loggedInUser == null) {
+            return;
+        }
+
+        int answer = JOptionPane.showConfirmDialog(
+                CalendarDialogWin,
+                "Vai tiešām vēlaties atcelt savu vizīti?",
+                "Atcelt vizīti",
+                JOptionPane.YES_NO_OPTION
+        );
+
+        if (answer != JOptionPane.YES_OPTION) {
+            return;
+        }
+
+        boolean success = viziteDAO.cancelUpcomingVisit(
+                visit.getId(),
+                loggedInUser.getId()
+        );
+
+        if (success) {
+            JOptionPane.showMessageDialog(
+                    CalendarDialogWin,
+                    "Vizīte atcelta."
+            );
+        } else {
+            JOptionPane.showMessageDialog(
+                    CalendarDialogWin,
+                    "Neizdevās atcelt vizīti.",
+                    "Kļūda",
+                    JOptionPane.ERROR_MESSAGE
+            );
+        }
+
+        renderCalendar();
+    }
+
+    private void confirmAppointment(Vizite visit) {
+
+        if (visit == null || loggedInUser == null
+                || !doctorCalendarMode) {
+            return;
+        }
+
+        Lietotajs patient = userDAO.findById(
+                visit.getPacientsId()
+        );
+
+        String patientName = patient == null
+                ? "Nezināms pacients"
+                : patient.getVards() + " " + patient.getUzvards();
+
+        String date = new SimpleDateFormat("dd.MM.yyyy HH:mm")
+                .format(visit.getDatumsLaiks());
+
+        int answer = JOptionPane.showConfirmDialog(
+                CalendarDialogWin,
+                "Pacients: " + patientName
+                + "\nVizītes datums: " + date
+                + "\n\nVai apstiprināt vizīti?",
+                "Apstiprināt vizīti",
+                JOptionPane.YES_NO_OPTION
+        );
+
+        if (answer != JOptionPane.YES_OPTION) {
+            return;
+        }
+
+        boolean success = viziteDAO.confirmVisit(
+                visit.getId(),
+                loggedInUser.getId()
+        );
+
+        if (success) {
+            JOptionPane.showMessageDialog(
+                    CalendarDialogWin,
+                    "Vizīte apstiprināta!"
+            );
+        } else {
+            JOptionPane.showMessageDialog(
+                    CalendarDialogWin,
+                    "Neizdevās apstiprināt vizīti.",
+                    "Kļūda",
+                    JOptionPane.ERROR_MESSAGE
+            );
+        }
+
+        renderCalendar();
     }
 
     private void loadPrescriptions() {
@@ -2583,7 +2760,7 @@ public class FormDBSystemGUI extends javax.swing.JFrame {
     private javax.swing.JButton btnRegisterBack;
     private javax.swing.JButton btnRelate;
     private javax.swing.JButton btnVisits1;
-    private javax.swing.JButton btnVisits2;
+    private javax.swing.JButton btnVisitsDoc;
     private javax.swing.JComboBox<String> comboAssignDoctor;
     private javax.swing.JComboBox<String> comboAssignPatient;
     private javax.swing.JComboBox<String> comboBoxRegisterRole;

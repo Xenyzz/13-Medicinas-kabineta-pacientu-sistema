@@ -22,11 +22,80 @@ import model.Vizite;
 
 public class ViziteDAO {
 
+    public List<Vizite> getVisitsByPatientId(int pacientsId) {
+        List<Vizite> visits = new ArrayList<>();
+
+        String sql = "SELECT vizites_id, pacienta_id, arsta_id, "
+                + "datums_laiks, ir_apstiprinats "
+                + "FROM vizites "
+                + "WHERE pacienta_id = ? "
+                + "ORDER BY datums_laiks";
+
+        try (Connection conn = DatabaseManager.getConnection(); PreparedStatement ps = conn.prepareStatement(sql)) {
+
+            ps.setInt(1, pacientsId);
+
+            try (ResultSet rs = ps.executeQuery()) {
+                while (rs.next()) {
+                    Vizite visit = new Vizite();
+
+                    visit.setId(rs.getInt("vizites_id"));
+                    visit.setPacientsId(rs.getInt("pacienta_id"));
+                    visit.setArstsId(rs.getInt("arsta_id"));
+                    visit.setDatumsLaiks(rs.getTimestamp("datums_laiks"));
+                    visit.setIrApstiprinats(
+                            rs.getBoolean("ir_apstiprinats"));
+
+                    visits.add(visit);
+                }
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return visits;
+    }
+
+    public List<Vizite> getVisitsByDoctorId(int arstsId) {
+        List<Vizite> visits = new ArrayList<>();
+
+        String sql = "SELECT vizites_id, pacienta_id, arsta_id, "
+                + "datums_laiks, ir_apstiprinats "
+                + "FROM vizites "
+                + "WHERE arsta_id = ? "
+                + "ORDER BY datums_laiks";
+
+        try (Connection conn = DatabaseManager.getConnection(); PreparedStatement ps = conn.prepareStatement(sql)) {
+
+            ps.setInt(1, arstsId);
+
+            try (ResultSet rs = ps.executeQuery()) {
+                while (rs.next()) {
+                    Vizite visit = new Vizite();
+
+                    visit.setId(rs.getInt("vizites_id"));
+                    visit.setPacientsId(rs.getInt("pacienta_id"));
+                    visit.setArstsId(rs.getInt("arsta_id"));
+                    visit.setDatumsLaiks(rs.getTimestamp("datums_laiks"));
+                    visit.setIrApstiprinats(
+                            rs.getBoolean("ir_apstiprinats"));
+
+                    visits.add(visit);
+                }
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return visits;
+    }
+
     public List<Date> getOccupiedDates(int arstsId) {
         List<Date> dates = new ArrayList<>();
 
         String sql = "SELECT datums_laiks FROM vizites WHERE arsta_id = ?";
-
         try (Connection conn = DatabaseManager.getConnection(); PreparedStatement ps = conn.prepareStatement(sql)) {
 
             ps.setInt(1, arstsId);
@@ -234,6 +303,46 @@ public class ViziteDAO {
         }
 
         return visits;
+    }
+
+    public boolean cancelUpcomingVisit(int viziteId, int pacientsId) {
+        String sql = "DELETE FROM vizites "
+                + "WHERE vizites_id = ? "
+                + "AND pacienta_id = ? "
+                + "AND datums_laiks > CURRENT_TIMESTAMP";
+
+        try (Connection conn = DatabaseManager.getConnection(); PreparedStatement ps = conn.prepareStatement(sql)) {
+
+            ps.setInt(1, viziteId);
+            ps.setInt(2, pacientsId);
+
+            return ps.executeUpdate() == 1;
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
+
+    public boolean confirmVisit(int viziteId, int arstsId) {
+        String sql = "UPDATE vizites "
+                + "SET ir_apstiprinats = TRUE "
+                + "WHERE vizites_id = ? "
+                + "AND arsta_id = ? "
+                + "AND ir_apstiprinats = FALSE "
+                + "AND datums_laiks > CURRENT_TIMESTAMP";
+
+        try (Connection conn = DatabaseManager.getConnection(); PreparedStatement ps = conn.prepareStatement(sql)) {
+
+            ps.setInt(1, viziteId);
+            ps.setInt(2, arstsId);
+
+            return ps.executeUpdate() == 1;
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return false;
+        }
     }
 
 }
