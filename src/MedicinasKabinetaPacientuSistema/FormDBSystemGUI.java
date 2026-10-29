@@ -57,9 +57,6 @@ public class FormDBSystemGUI extends javax.swing.JFrame {
         initComponents();
         DatabaseManager.init();
 
-        initComponents();
-        DatabaseManager.init();
-
         btnCalendarPrev.addActionListener(e -> {
             displayedMonth = displayedMonth.minusMonths(1);
             renderCalendar();
@@ -2218,7 +2215,41 @@ public class FormDBSystemGUI extends javax.swing.JFrame {
 
     private void btnReceptActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnReceptActionPerformed
         // TODO add your handling code here:
-        loadPrescriptions();
+        DefaultTableModel model
+                = (DefaultTableModel) tablePrescriptions.getModel();
+
+        model.setRowCount(0);
+
+        List<Recepte> receptes
+                = recepteDAO.getReceptesByPacientsId(loggedInUser.getId());
+
+        Lietotajs doctor
+                = userDAO.findDoctorByPatientId(loggedInUser.getId());
+
+        String doctorName = "—";
+
+        if (doctor != null) {
+            doctorName = doctor.getVards() + " " + doctor.getUzvards();
+        }
+
+        SimpleDateFormat dateFormat
+                = new SimpleDateFormat("dd.MM.yyyy");
+
+        for (Recepte recepte : receptes) {
+            String date = "";
+
+            if (recepte.getIzsniegsanasDatums() != null) {
+                date = dateFormat.format(
+                        recepte.getIzsniegsanasDatums());
+            }
+
+            model.addRow(new Object[]{
+                recepte.getMedikamentaNosaukums(),
+                doctorName,
+                date
+            });
+        }
+
         PrescriptionDialogWin.pack();
         PrescriptionDialogWin.setLocationRelativeTo(this);
         PrescriptionDialogWin.setVisible(true);
@@ -2552,12 +2583,157 @@ public class FormDBSystemGUI extends javax.swing.JFrame {
 
             dayButton.addActionListener(e -> {
 
+                // Arsts apstiprina pacienta vizīti
                 if (doctorCalendarMode) {
-                    confirmAppointment(selectedVisit);
+
+                    if (selectedVisit == null || loggedInUser == null) {
+                        return;
+                    }
+
+                    Lietotajs patient = userDAO.findById(
+                            selectedVisit.getPacientsId()
+                    );
+
+                    String patientName = patient == null
+                            ? "Nezināms pacients"
+                            : patient.getVards() + " " + patient.getUzvards();
+
+                    String visitDate = new SimpleDateFormat("dd.MM.yyyy HH:mm")
+                            .format(selectedVisit.getDatumsLaiks());
+
+                    int answer = JOptionPane.showConfirmDialog(
+                            CalendarDialogWin,
+                            "Pacients: " + patientName
+                            + "\nVizītes datums: " + visitDate
+                            + "\n\nVai apstiprināt vizīti?",
+                            "Apstiprināt vizīti",
+                            JOptionPane.YES_NO_OPTION
+                    );
+
+                    if (answer != JOptionPane.YES_OPTION) {
+                        return;
+                    }
+
+                    boolean success = viziteDAO.confirmVisit(
+                            selectedVisit.getId(),
+                            loggedInUser.getId()
+                    );
+
+                    if (success) {
+                        JOptionPane.showMessageDialog(
+                                CalendarDialogWin,
+                                "Vizīte apstiprināta!"
+                        );
+                    } else {
+                        JOptionPane.showMessageDialog(
+                                CalendarDialogWin,
+                                "Neizdevās apstiprināt vizīti.",
+                                "Kļūda",
+                                JOptionPane.ERROR_MESSAGE
+                        );
+                    }
+
+                    renderCalendar();
+
+                    // Pacients atceļ savu vizīti
                 } else if (selectedVisit != null) {
-                    cancelAppointment(selectedVisit);
+
+                    if (loggedInUser == null) {
+                        return;
+                    }
+
+                    int answer = JOptionPane.showConfirmDialog(
+                            CalendarDialogWin,
+                            "Vai tiešām vēlaties atcelt savu vizīti?",
+                            "Atcelt vizīti",
+                            JOptionPane.YES_NO_OPTION
+                    );
+
+                    if (answer != JOptionPane.YES_OPTION) {
+                        return;
+                    }
+
+                    boolean success = viziteDAO.cancelUpcomingVisit(
+                            selectedVisit.getId(),
+                            loggedInUser.getId()
+                    );
+
+                    if (success) {
+                        JOptionPane.showMessageDialog(
+                                CalendarDialogWin,
+                                "Vizīte atcelta."
+                        );
+                    } else {
+                        JOptionPane.showMessageDialog(
+                                CalendarDialogWin,
+                                "Neizdevās atcelt vizīti.",
+                                "Kļūda",
+                                JOptionPane.ERROR_MESSAGE
+                        );
+                    }
+
+                    renderCalendar();
+
+                    // Pacients piesakās uz brīvu datumu
                 } else {
-                    bookAppointment(date);
+
+                    if (calendarDoctor == null || loggedInUser == null) {
+                        return;
+                    }
+
+                    int answer = JOptionPane.showConfirmDialog(
+                            CalendarDialogWin,
+                            "Vai vēlaties pieteikt vizīti pie "
+                            + calendarDoctor.getVards() + " "
+                            + calendarDoctor.getUzvards()
+                            + " " + date
+                            + " plkst. 09:00?",
+                            "Apstiprināt pierakstu",
+                            JOptionPane.YES_NO_OPTION
+                    );
+
+                    if (answer != JOptionPane.YES_OPTION) {
+                        return;
+                    }
+
+                    Calendar cal = Calendar.getInstance();
+                    cal.clear();
+
+                    cal.set(
+                            date.getYear(),
+                            date.getMonthValue() - 1,
+                            date.getDayOfMonth(),
+                            9,
+                            0,
+                            0
+                    );
+
+                    Date appointmentDate = cal.getTime();
+
+                    Vizite vizite = new Vizite();
+                    vizite.setPacientsId(loggedInUser.getId());
+                    vizite.setArstsId(calendarDoctor.getId());
+                    vizite.setDatumsLaiks(appointmentDate);
+
+                    boolean success = viziteDAO.addVizite(vizite);
+
+                    if (success) {
+                        JOptionPane.showMessageDialog(
+                                CalendarDialogWin,
+                                "Pieraksts izveidots! "
+                                + "Gaidiet ārsta apstiprinājumu."
+                        );
+                    } else {
+                        JOptionPane.showMessageDialog(
+                                CalendarDialogWin,
+                                "Neizdevās izveidot pierakstu. "
+                                + "Iespējams, datums jau ir aizņemts.",
+                                "Kļūda",
+                                JOptionPane.ERROR_MESSAGE
+                        );
+                    }
+
+                    renderCalendar();
                 }
             });
 
@@ -2583,203 +2759,6 @@ public class FormDBSystemGUI extends javax.swing.JFrame {
                 cal.get(Calendar.MONTH) + 1,
                 cal.get(Calendar.DAY_OF_MONTH)
         );
-    }
-
-    private void cancelAppointment(Vizite visit) {
-
-        if (visit == null || loggedInUser == null) {
-            return;
-        }
-
-        int answer = JOptionPane.showConfirmDialog(
-                CalendarDialogWin,
-                "Vai tiešām vēlaties atcelt savu vizīti?",
-                "Atcelt vizīti",
-                JOptionPane.YES_NO_OPTION
-        );
-
-        if (answer != JOptionPane.YES_OPTION) {
-            return;
-        }
-
-        boolean success = viziteDAO.cancelUpcomingVisit(
-                visit.getId(),
-                loggedInUser.getId()
-        );
-
-        if (success) {
-            JOptionPane.showMessageDialog(
-                    CalendarDialogWin,
-                    "Vizīte atcelta."
-            );
-        } else {
-            JOptionPane.showMessageDialog(
-                    CalendarDialogWin,
-                    "Neizdevās atcelt vizīti.",
-                    "Kļūda",
-                    JOptionPane.ERROR_MESSAGE
-            );
-        }
-
-        renderCalendar();
-    }
-
-    private void confirmAppointment(Vizite visit) {
-
-        if (visit == null || loggedInUser == null
-                || !doctorCalendarMode) {
-            return;
-        }
-
-        Lietotajs patient = userDAO.findById(
-                visit.getPacientsId()
-        );
-
-        String patientName = patient == null
-                ? "Nezināms pacients"
-                : patient.getVards() + " " + patient.getUzvards();
-
-        String date = new SimpleDateFormat("dd.MM.yyyy HH:mm")
-                .format(visit.getDatumsLaiks());
-
-        int answer = JOptionPane.showConfirmDialog(
-                CalendarDialogWin,
-                "Pacients: " + patientName
-                + "\nVizītes datums: " + date
-                + "\n\nVai apstiprināt vizīti?",
-                "Apstiprināt vizīti",
-                JOptionPane.YES_NO_OPTION
-        );
-
-        if (answer != JOptionPane.YES_OPTION) {
-            return;
-        }
-
-        boolean success = viziteDAO.confirmVisit(
-                visit.getId(),
-                loggedInUser.getId()
-        );
-
-        if (success) {
-            JOptionPane.showMessageDialog(
-                    CalendarDialogWin,
-                    "Vizīte apstiprināta!"
-            );
-        } else {
-            JOptionPane.showMessageDialog(
-                    CalendarDialogWin,
-                    "Neizdevās apstiprināt vizīti.",
-                    "Kļūda",
-                    JOptionPane.ERROR_MESSAGE
-            );
-        }
-
-        renderCalendar();
-    }
-
-    private void loadPrescriptions() {
-        DefaultTableModel model
-                = (DefaultTableModel) tablePrescriptions.getModel();
-
-        // Notīrām tabulu
-        model.setRowCount(0);
-
-        List<Recepte> receptes
-                = recepteDAO.getReceptesByPacientsId(loggedInUser.getId());
-
-        Lietotajs doctor
-                = userDAO.findDoctorByPatientId(loggedInUser.getId());
-
-        String doctorName = "—";
-
-        if (doctor != null) {
-            doctorName = doctor.getVards() + " " + doctor.getUzvards();
-        }
-
-        SimpleDateFormat dateFormat
-                = new SimpleDateFormat("dd.MM.yyyy");
-
-        for (Recepte recepte : receptes) {
-            String date = "";
-
-            if (recepte.getIzsniegsanasDatums() != null) {
-                date = dateFormat.format(
-                        recepte.getIzsniegsanasDatums());
-            }
-
-            model.addRow(new Object[]{
-                recepte.getMedikamentaNosaukums(),
-                doctorName,
-                date
-            });
-        }
-    }
-
-    private void bookAppointment(LocalDate date) {
-
-        if (calendarDoctor == null || loggedInUser == null) {
-            return;
-        }
-
-        int answer = JOptionPane.showConfirmDialog(
-                CalendarDialogWin,
-                "Vai vēlaties pieteikt vizīti pie "
-                + calendarDoctor.getVards() + " "
-                + calendarDoctor.getUzvards()
-                + " " + date
-                + " plkst. 09:00?",
-                "Apstiprināt pierakstu",
-                JOptionPane.YES_NO_OPTION
-        );
-
-        if (answer != JOptionPane.YES_OPTION) {
-            return;
-        }
-
-        // Izveidojam datumu ar fiksētu laiku 09:00.
-        Calendar cal = Calendar.getInstance();
-        cal.clear();
-
-        cal.set(
-                date.getYear(),
-                date.getMonthValue() - 1,
-                date.getDayOfMonth(),
-                9,
-                0,
-                0
-        );
-
-        Date appointmentDate = cal.getTime();
-
-        Vizite vizite = new Vizite();
-
-        vizite.setPacientsId(loggedInUser.getId());
-        vizite.setArstsId(calendarDoctor.getId());
-        vizite.setDatumsLaiks(appointmentDate);
-
-        boolean success = viziteDAO.addVizite(vizite);
-
-        if (success) {
-
-            JOptionPane.showMessageDialog(
-                    CalendarDialogWin,
-                    "Pieraksts izveidots! "
-                    + "Gaidiet ārsta apstiprinājumu."
-            );
-
-        } else {
-
-            JOptionPane.showMessageDialog(
-                    CalendarDialogWin,
-                    "Neizdevās izveidot pierakstu. "
-                    + "Iespējams, datums jau ir aizņemts.",
-                    "Kļūda",
-                    JOptionPane.ERROR_MESSAGE
-            );
-        }
-
-        // Atjaunojam kalendāru pēc mēģinājuma veikt pierakstu.
-        renderCalendar();
     }
 
     /**
