@@ -49,6 +49,9 @@ public class FormDBSystemGUI extends javax.swing.JFrame {
     private boolean doctorCalendarMode = false;
     private Lietotajs calendarDoctor;
     private YearMonth displayedMonth = YearMonth.now();
+    private Vizite selectedVisitForCancel;
+    private Vizite selectedVisitForConfirm;
+    private LocalDate selectedDateForBooking;
 
     /**
      * Creates new form FormDBSystemGUI
@@ -57,17 +60,10 @@ public class FormDBSystemGUI extends javax.swing.JFrame {
         initComponents();
         DatabaseManager.init();
 
-        btnCalendarPrev.addActionListener(e -> {
-            displayedMonth = displayedMonth.minusMonths(1);
-            renderCalendar();
-        });
-
-        btnCalendarNext.addActionListener(e -> {
-            displayedMonth = displayedMonth.plusMonths(1);
-            renderCalendar();
-        });
-
         comboCalendarDoctor.setEnabled(false);
+        CancelDialogWin.setModal(true);
+        ConfirmDialogWin.setModal(true);
+        PlanDialogWin.setModal(true);
     }
 
     /**
@@ -867,9 +863,19 @@ public class FormDBSystemGUI extends javax.swing.JFrame {
 
         btnCalendarPrev.setText("<");
         btnCalendarPrev.setPreferredSize(new java.awt.Dimension(34, 30));
+        btnCalendarPrev.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnCalendarPrevActionPerformed(evt);
+            }
+        });
 
         btnCalendarNext.setText(">");
         btnCalendarNext.setPreferredSize(new java.awt.Dimension(34, 30));
+        btnCalendarNext.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnCalendarNextActionPerformed(evt);
+            }
+        });
 
         panelCalendarGrid.setBackground(new java.awt.Color(255, 255, 255));
         panelCalendarGrid.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(221, 228, 238)));
@@ -2385,6 +2391,18 @@ public class FormDBSystemGUI extends javax.swing.JFrame {
         // TODO add your handling code here:
         HistoryDialogWin.setVisible(false);
     }//GEN-LAST:event_btnHistoryCloseActionPerformed
+
+    private void btnCalendarPrevActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCalendarPrevActionPerformed
+        // TODO add your handling code here:
+        displayedMonth = displayedMonth.minusMonths(1);
+        renderCalendar();
+    }//GEN-LAST:event_btnCalendarPrevActionPerformed
+
+    private void btnCalendarNextActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCalendarNextActionPerformed
+        // TODO add your handling code here:
+        displayedMonth = displayedMonth.plusMonths(1);
+        renderCalendar();
+    }//GEN-LAST:event_btnCalendarNextActionPerformed
 
     private void openCalendar() {
 

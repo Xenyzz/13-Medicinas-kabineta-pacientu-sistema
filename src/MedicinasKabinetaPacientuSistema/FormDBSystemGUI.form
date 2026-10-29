@@ -1185,6 +1185,9 @@
               <Dimension value="[34, 30]"/>
             </Property>
           </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnCalendarPrevActionPerformed"/>
+          </Events>
         </Component>
         <Component class="javax.swing.JButton" name="btnCalendarNext">
           <Properties>
@@ -1193,6 +1196,9 @@
               <Dimension value="[34, 30]"/>
             </Property>
           </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnCalendarNextActionPerformed"/>
+          </Events>
         </Component>
         <Container class="javax.swing.JPanel" name="panelCalendarGrid">
           <Properties>
