@@ -174,8 +174,8 @@ public class FormDBSystemGUI extends javax.swing.JFrame {
         txtPlanTimeValue = new javax.swing.JLabel();
         jSeparator4 = new javax.swing.JSeparator();
         txtPlanQuestion = new javax.swing.JLabel();
-        jButton1 = new javax.swing.JButton();
-        jButton2 = new javax.swing.JButton();
+        confirmVisitButton = new javax.swing.JButton();
+        cancelVisitButton = new javax.swing.JButton();
         HistoryDialogWin = new javax.swing.JDialog();
         txtHistoryHeading = new javax.swing.JLabel();
         scrollVisitHistory = new javax.swing.JScrollPane();
@@ -1138,16 +1138,26 @@ public class FormDBSystemGUI extends javax.swing.JFrame {
         txtPlanQuestion.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         txtPlanQuestion.setText("Vai vēlaties rezervēt šo laiku?");
 
-        jButton1.setBackground(new java.awt.Color(20, 80, 140));
-        jButton1.setFont(new java.awt.Font("Segoe UI", 1, 15)); // NOI18N
-        jButton1.setForeground(new java.awt.Color(255, 255, 255));
-        jButton1.setText("Apstiprināt");
-        jButton1.setPreferredSize(new java.awt.Dimension(200, 45));
+        confirmVisitButton.setBackground(new java.awt.Color(20, 80, 140));
+        confirmVisitButton.setFont(new java.awt.Font("Segoe UI", 1, 15)); // NOI18N
+        confirmVisitButton.setForeground(new java.awt.Color(255, 255, 255));
+        confirmVisitButton.setText("Apstiprināt");
+        confirmVisitButton.setPreferredSize(new java.awt.Dimension(200, 45));
+        confirmVisitButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                confirmVisitButtonActionPerformed(evt);
+            }
+        });
 
-        jButton2.setFont(new java.awt.Font("Segoe UI", 1, 15)); // NOI18N
-        jButton2.setForeground(new java.awt.Color(20, 80, 140));
-        jButton2.setText("Atcelt");
-        jButton2.setPreferredSize(new java.awt.Dimension(200, 45));
+        cancelVisitButton.setFont(new java.awt.Font("Segoe UI", 1, 15)); // NOI18N
+        cancelVisitButton.setForeground(new java.awt.Color(20, 80, 140));
+        cancelVisitButton.setText("Atcelt");
+        cancelVisitButton.setPreferredSize(new java.awt.Dimension(200, 45));
+        cancelVisitButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cancelVisitButtonActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout PlanDialogWinLayout = new javax.swing.GroupLayout(PlanDialogWin.getContentPane());
         PlanDialogWin.getContentPane().setLayout(PlanDialogWinLayout);
@@ -1178,9 +1188,9 @@ public class FormDBSystemGUI extends javax.swing.JFrame {
                                     .addComponent(txtPlanDateValue)))
                             .addGroup(PlanDialogWinLayout.createSequentialGroup()
                                 .addContainerGap()
-                                .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(confirmVisitButton, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(47, 47, 47)
-                                .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                .addComponent(cancelVisitButton, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                         .addGap(0, 21, Short.MAX_VALUE)))
                 .addContainerGap())
             .addGroup(PlanDialogWinLayout.createSequentialGroup()
@@ -1213,8 +1223,8 @@ public class FormDBSystemGUI extends javax.swing.JFrame {
                 .addComponent(txtPlanQuestion)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 48, Short.MAX_VALUE)
                 .addGroup(PlanDialogWinLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(confirmVisitButton, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(cancelVisitButton, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(14, 14, 14))
         );
 
@@ -1357,12 +1367,22 @@ public class FormDBSystemGUI extends javax.swing.JFrame {
         btnCancelNo.setForeground(new java.awt.Color(20, 80, 140));
         btnCancelNo.setText("Nē");
         btnCancelNo.setPreferredSize(new java.awt.Dimension(170, 48));
+        btnCancelNo.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnCancelNoActionPerformed(evt);
+            }
+        });
 
         btnCancelYes.setBackground(new java.awt.Color(20, 80, 140));
         btnCancelYes.setFont(new java.awt.Font("Segoe UI", 1, 15)); // NOI18N
         btnCancelYes.setForeground(new java.awt.Color(255, 255, 255));
         btnCancelYes.setText("Jā, atcelt");
         btnCancelYes.setPreferredSize(new java.awt.Dimension(170, 48));
+        btnCancelYes.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnCancelYesActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout CancelDialogWinLayout = new javax.swing.GroupLayout(CancelDialogWin.getContentPane());
         CancelDialogWin.getContentPane().setLayout(CancelDialogWinLayout);
@@ -1471,12 +1491,22 @@ public class FormDBSystemGUI extends javax.swing.JFrame {
         btnConfirmNo.setForeground(new java.awt.Color(20, 80, 140));
         btnConfirmNo.setText("Nē");
         btnConfirmNo.setPreferredSize(new java.awt.Dimension(170, 48));
+        btnConfirmNo.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnConfirmNoActionPerformed(evt);
+            }
+        });
 
         btnConfirmYes.setBackground(new java.awt.Color(20, 80, 140));
         btnConfirmYes.setFont(new java.awt.Font("Segoe UI", 1, 15)); // NOI18N
         btnConfirmYes.setForeground(new java.awt.Color(255, 255, 255));
         btnConfirmYes.setText("Jā ");
         btnConfirmYes.setPreferredSize(new java.awt.Dimension(170, 48));
+        btnConfirmYes.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnConfirmYesActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout ConfirmDialogWinLayout = new javax.swing.GroupLayout(ConfirmDialogWin.getContentPane());
         ConfirmDialogWin.getContentPane().setLayout(ConfirmDialogWinLayout);
@@ -2404,6 +2434,144 @@ public class FormDBSystemGUI extends javax.swing.JFrame {
         renderCalendar();
     }//GEN-LAST:event_btnCalendarNextActionPerformed
 
+    private void confirmVisitButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_confirmVisitButtonActionPerformed
+        // TODO add your handling code here:
+        if (selectedDateForBooking == null
+                || calendarDoctor == null
+                || loggedInUser == null) {
+            return;
+        }
+
+        Calendar cal = Calendar.getInstance();
+        cal.clear();
+
+        cal.set(
+                selectedDateForBooking.getYear(),
+                selectedDateForBooking.getMonthValue() - 1,
+                selectedDateForBooking.getDayOfMonth(),
+                9,
+                0,
+                0
+        );
+
+        Date appointmentDate = cal.getTime();
+
+        Vizite vizite = new Vizite();
+        vizite.setPacientsId(loggedInUser.getId());
+        vizite.setArstsId(calendarDoctor.getId());
+        vizite.setDatumsLaiks(appointmentDate);
+
+        boolean success = viziteDAO.addVizite(vizite);
+
+        PlanDialogWin.setVisible(false);
+        selectedDateForBooking = null;
+
+        if (success) {
+            JOptionPane.showMessageDialog(
+                    CalendarDialogWin,
+                    "Pieraksts izveidots! "
+                    + "Gaidiet ārsta apstiprinājumu."
+            );
+        } else {
+            JOptionPane.showMessageDialog(
+                    CalendarDialogWin,
+                    "Neizdevās izveidot pierakstu. "
+                    + "Iespējams, datums jau ir aizņemts "
+                    + "vai ārsts nav jums piesaistīts.",
+                    "Kļūda",
+                    JOptionPane.ERROR_MESSAGE
+            );
+        }
+
+        renderCalendar();
+    }//GEN-LAST:event_confirmVisitButtonActionPerformed
+
+    private void cancelVisitButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cancelVisitButtonActionPerformed
+        // TODO add your handling code here:
+        selectedDateForBooking = null;
+        PlanDialogWin.setVisible(false);
+
+    }//GEN-LAST:event_cancelVisitButtonActionPerformed
+
+    private void btnCancelNoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelNoActionPerformed
+        // TODO add your handling code here:
+        selectedVisitForCancel = null;
+        CancelDialogWin.setVisible(false);
+
+    }//GEN-LAST:event_btnCancelNoActionPerformed
+
+    private void btnConfirmNoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnConfirmNoActionPerformed
+        // TODO add your handling code here:
+        selectedVisitForCancel = null;
+        CancelDialogWin.setVisible(false);
+    }//GEN-LAST:event_btnConfirmNoActionPerformed
+
+    private void btnConfirmYesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnConfirmYesActionPerformed
+        // TODO add your handling code here:
+        if (selectedVisitForConfirm == null || loggedInUser == null) {
+            ConfirmDialogWin.setVisible(false);
+            selectedVisitForConfirm = null;
+            return;
+        }
+
+        boolean success = viziteDAO.confirmVisit(
+                selectedVisitForConfirm.getId(),
+                loggedInUser.getId()
+        );
+
+        selectedVisitForConfirm = null;
+        ConfirmDialogWin.setVisible(false);
+
+        if (success) {
+            JOptionPane.showMessageDialog(
+                    CalendarDialogWin,
+                    "Vizīte apstiprināta!"
+            );
+        } else {
+            JOptionPane.showMessageDialog(
+                    CalendarDialogWin,
+                    "Neizdevās apstiprināt vizīti.",
+                    "Kļūda",
+                    JOptionPane.ERROR_MESSAGE
+            );
+        }
+
+        renderCalendar();
+    }//GEN-LAST:event_btnConfirmYesActionPerformed
+
+    private void btnCancelYesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelYesActionPerformed
+        // TODO add your handling code here:
+        if (selectedVisitForCancel == null || loggedInUser == null) {
+            CancelDialogWin.setVisible(false);
+            selectedVisitForCancel = null;
+            return;
+        }
+
+        boolean success = viziteDAO.cancelUpcomingVisit(
+                selectedVisitForCancel.getId(),
+                loggedInUser.getId()
+        );
+
+        selectedVisitForCancel = null;
+        CancelDialogWin.setVisible(false);
+
+        if (success) {
+            JOptionPane.showMessageDialog(
+                    CalendarDialogWin,
+                    "Vizīte atcelta."
+            );
+        } else {
+            JOptionPane.showMessageDialog(
+                    CalendarDialogWin,
+                    "Neizdevās atcelt vizīti.",
+                    "Kļūda",
+                    JOptionPane.ERROR_MESSAGE
+            );
+        }
+
+        renderCalendar();
+    }//GEN-LAST:event_btnCancelYesActionPerformed
+
     private void openCalendar() {
 
         if (loggedInUser == null) {
@@ -2601,7 +2769,7 @@ public class FormDBSystemGUI extends javax.swing.JFrame {
 
             dayButton.addActionListener(e -> {
 
-                // Arsts apstiprina pacienta vizīti
+                // Ārsts atver logu, lai apstiprinātu vizīti.
                 if (doctorCalendarMode) {
 
                     if (selectedVisit == null || loggedInUser == null) {
@@ -2614,144 +2782,82 @@ public class FormDBSystemGUI extends javax.swing.JFrame {
 
                     String patientName = patient == null
                             ? "Nezināms pacients"
-                            : patient.getVards() + " " + patient.getUzvards();
+                            : patient.getVards() + " "
+                            + patient.getUzvards();
 
-                    String visitDate = new SimpleDateFormat("dd.MM.yyyy HH:mm")
-                            .format(selectedVisit.getDatumsLaiks());
+                    String visitDate
+                            = new SimpleDateFormat("dd.MM.yyyy HH:mm")
+                                    .format(selectedVisit.getDatumsLaiks());
 
-                    int answer = JOptionPane.showConfirmDialog(
-                            CalendarDialogWin,
-                            "Pacients: " + patientName
-                            + "\nVizītes datums: " + visitDate
-                            + "\n\nVai apstiprināt vizīti?",
-                            "Apstiprināt vizīti",
-                            JOptionPane.YES_NO_OPTION
+                    selectedVisitForConfirm = selectedVisit;
+
+                    txtConfirmDateTimeValue.setText(visitDate);
+                    txtConfirmDoctorValue.setText(patientName);
+
+                    ConfirmDialogWin.pack();
+                    ConfirmDialogWin.setLocationRelativeTo(
+                            CalendarDialogWin
                     );
+                    ConfirmDialogWin.setVisible(true);
 
-                    if (answer != JOptionPane.YES_OPTION) {
-                        return;
-                    }
-
-                    boolean success = viziteDAO.confirmVisit(
-                            selectedVisit.getId(),
-                            loggedInUser.getId()
-                    );
-
-                    if (success) {
-                        JOptionPane.showMessageDialog(
-                                CalendarDialogWin,
-                                "Vizīte apstiprināta!"
-                        );
-                    } else {
-                        JOptionPane.showMessageDialog(
-                                CalendarDialogWin,
-                                "Neizdevās apstiprināt vizīti.",
-                                "Kļūda",
-                                JOptionPane.ERROR_MESSAGE
-                        );
-                    }
-
-                    renderCalendar();
-
-                    // Pacients atceļ savu vizīti
+                    // Pacients atver logu, lai atceltu savu vizīti.
                 } else if (selectedVisit != null) {
 
                     if (loggedInUser == null) {
                         return;
                     }
 
-                    int answer = JOptionPane.showConfirmDialog(
-                            CalendarDialogWin,
-                            "Vai tiešām vēlaties atcelt savu vizīti?",
-                            "Atcelt vizīti",
-                            JOptionPane.YES_NO_OPTION
+                    Lietotajs doctor = userDAO.findById(
+                            selectedVisit.getArstsId()
                     );
 
-                    if (answer != JOptionPane.YES_OPTION) {
-                        return;
-                    }
+                    String doctorName = doctor == null
+                            ? "Nezināms ārsts"
+                            : doctor.getVards() + " "
+                            + doctor.getUzvards();
 
-                    boolean success = viziteDAO.cancelUpcomingVisit(
-                            selectedVisit.getId(),
-                            loggedInUser.getId()
+                    String visitDate
+                            = new SimpleDateFormat("dd.MM.yyyy HH:mm")
+                                    .format(selectedVisit.getDatumsLaiks());
+
+                    selectedVisitForCancel = selectedVisit;
+
+                    txtCancelDateTimeValue.setText(visitDate);
+                    txtCancelDoctorValue.setText(doctorName);
+
+                    CancelDialogWin.pack();
+                    CancelDialogWin.setLocationRelativeTo(
+                            CalendarDialogWin
                     );
+                    CancelDialogWin.setVisible(true);
 
-                    if (success) {
-                        JOptionPane.showMessageDialog(
-                                CalendarDialogWin,
-                                "Vizīte atcelta."
-                        );
-                    } else {
-                        JOptionPane.showMessageDialog(
-                                CalendarDialogWin,
-                                "Neizdevās atcelt vizīti.",
-                                "Kļūda",
-                                JOptionPane.ERROR_MESSAGE
-                        );
-                    }
-
-                    renderCalendar();
-
-                    // Pacients piesakās uz brīvu datumu
+                    // Pacients atver logu, lai pieteiktos uz brīvu datumu.
                 } else {
 
                     if (calendarDoctor == null || loggedInUser == null) {
                         return;
                     }
 
-                    int answer = JOptionPane.showConfirmDialog(
-                            CalendarDialogWin,
-                            "Vai vēlaties pieteikt vizīti pie "
-                            + calendarDoctor.getVards() + " "
+                    selectedDateForBooking = date;
+
+                    txtPlanDoctorValue.setText(
+                            calendarDoctor.getVards() + " "
                             + calendarDoctor.getUzvards()
-                            + " " + date
-                            + " plkst. 09:00?",
-                            "Apstiprināt pierakstu",
-                            JOptionPane.YES_NO_OPTION
                     );
 
-                    if (answer != JOptionPane.YES_OPTION) {
-                        return;
-                    }
-
-                    Calendar cal = Calendar.getInstance();
-                    cal.clear();
-
-                    cal.set(
-                            date.getYear(),
-                            date.getMonthValue() - 1,
-                            date.getDayOfMonth(),
-                            9,
-                            0,
-                            0
+                    txtPlanDateValue.setText(
+                            date.format(
+                                    DateTimeFormatter.ofPattern("dd.MM.yyyy")
+                            )
                     );
 
-                    Date appointmentDate = cal.getTime();
+                    txtPlanTimeValue.setText("09:00");
 
-                    Vizite vizite = new Vizite();
-                    vizite.setPacientsId(loggedInUser.getId());
-                    vizite.setArstsId(calendarDoctor.getId());
-                    vizite.setDatumsLaiks(appointmentDate);
-
-                    boolean success = viziteDAO.addVizite(vizite);
-
-                    if (success) {
-                        JOptionPane.showMessageDialog(
-                                CalendarDialogWin,
-                                "Pieraksts izveidots! "
-                                + "Gaidiet ārsta apstiprinājumu."
-                        );
-                    } else {
-                        JOptionPane.showMessageDialog(
-                                CalendarDialogWin,
-                                "Neizdevās izveidot pierakstu. "
-                                + "Iespējams, datums jau ir aizņemts.",
-                                "Kļūda",
-                                JOptionPane.ERROR_MESSAGE
-                        );
-                    }
-
-                    renderCalendar();
+                    PlanDialogWin.pack();
+                    PlanDialogWin.setLocationRelativeTo(
+                            CalendarDialogWin
+                    );
+                    PlanDialogWin.setVisible(true);
                 }
             });
 
@@ -2860,10 +2966,12 @@ public class FormDBSystemGUI extends javax.swing.JFrame {
     private javax.swing.JButton btnRelate;
     private javax.swing.JButton btnVisits1;
     private javax.swing.JButton btnVisitsDoc;
+    private javax.swing.JButton cancelVisitButton;
     private javax.swing.JComboBox<String> comboAssignDoctor;
     private javax.swing.JComboBox<String> comboAssignPatient;
     private javax.swing.JComboBox<String> comboBoxRegisterRole;
     private javax.swing.JComboBox<String> comboCalendarDoctor;
+    private javax.swing.JButton confirmVisitButton;
     private javax.swing.JTextField fieldLoginName;
     private javax.swing.JTextField fieldLoginPassword;
     private javax.swing.JTextField fieldLoginPersonalCode;
@@ -2872,8 +2980,6 @@ public class FormDBSystemGUI extends javax.swing.JFrame {
     private javax.swing.JTextField fieldRegisterPassword;
     private javax.swing.JTextField fieldRegisterPersonalCode;
     private javax.swing.JTextField fieldRegisterSurname;
-    private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton2;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JPanel jPanel1;
