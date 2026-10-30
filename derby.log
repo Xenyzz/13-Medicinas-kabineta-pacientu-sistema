@@ -1,6 +1,6 @@
 ----------------------------------------------------------------
-Thu Oct 29 10:56:04 EET 2026:
-Booting Derby version The Apache Software Foundation - Apache Derby - 10.17.1.0 - (1913217): instance a816c00e-01a1-86df-9be1-00000f9a7310 
+Fri Oct 30 10:20:21 EET 2026:
+Booting Derby version The Apache Software Foundation - Apache Derby - 10.17.1.0 - (1913217): instance a816c00e-01a1-8be5-44b9-00000f9bee48 
 on database directory D:\PR-31 Salkovskis\13-Medicinas-kabineta-pacientu-sistema-master\database\med_db with class loader jdk.internal.loader.ClassLoaders$AppClassLoader@33909752 
 Loaded from file:/D:/PR-31%20Salkovskis/13-Medicinas-kabineta-pacientu-sistema-master/src/lib/derby.jar
 java.vendor=Oracle Corporation

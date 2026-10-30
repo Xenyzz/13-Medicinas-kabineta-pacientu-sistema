@@ -3110,6 +3110,9 @@
                   <Dimension value="[120, 30]"/>
                 </Property>
               </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnPacientListCloseActionPerformed"/>
+              </Events>
             </Component>
           </SubComponents>
         </Container>
@@ -3395,6 +3398,9 @@
               <Dimension value="[155, 35]"/>
             </Property>
           </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnInfoClose1ActionPerformed"/>
+          </Events>
         </Component>
       </SubComponents>
     </Container>

@@ -1985,6 +1985,11 @@ public class FormDBSystemGUI extends javax.swing.JFrame {
         btnPacientListClose.setFocusPainted(false);
         btnPacientListClose.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
         btnPacientListClose.setPreferredSize(new java.awt.Dimension(120, 30));
+        btnPacientListClose.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnPacientListCloseActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout panelPacientListFooterLayout = new javax.swing.GroupLayout(panelPacientListFooter);
         panelPacientListFooter.setLayout(panelPacientListFooterLayout);
@@ -2161,6 +2166,11 @@ public class FormDBSystemGUI extends javax.swing.JFrame {
         btnInfoClose1.setForeground(new java.awt.Color(255, 255, 255));
         btnInfoClose1.setText("Aizvērt");
         btnInfoClose1.setPreferredSize(new java.awt.Dimension(155, 35));
+        btnInfoClose1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnInfoClose1ActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout PacientInfoDialogWinLayout = new javax.swing.GroupLayout(PacientInfoDialogWin.getContentPane());
         PacientInfoDialogWin.getContentPane().setLayout(PacientInfoDialogWinLayout);
@@ -2547,12 +2557,29 @@ public class FormDBSystemGUI extends javax.swing.JFrame {
     java.util.List<model.Lietotajs> patients =
             userDAO.getPatientsByDoctorId(loggedInUser.getId());
 
+    // Iztīra ComboBox
     jComboPacientListPacient.removeAllItems();
 
+    // Iztīra tabulu
+    javax.swing.table.DefaultTableModel tableModel =
+            (javax.swing.table.DefaultTableModel) tablePacientPreview.getModel();
+
+    tableModel.setRowCount(0);
+
+    // Ievieto pacientus ComboBox un tabulā
     for (model.Lietotajs patient : patients) {
+
+        // ComboBox
         jComboPacientListPacient.addItem(
                 patient.getVards() + " " + patient.getUzvards()
         );
+
+        // Tabula
+        tableModel.addRow(new Object[]{
+            patient.getVards(),
+            patient.getUzvards(),
+            patient.getPersonasKodsEnc()
+        });
     }
 
     if (patients.isEmpty()) {
@@ -2651,10 +2678,22 @@ int selectedIndex = jComboPacientListPacient.getSelectedIndex();
             patient.getPersonasKodsEnc()
     );
 
-    PacientInfoDialogWin.pack();
-    PacientInfoDialogWin.setLocationRelativeTo(PacientListDialogWin);
-    PacientInfoDialogWin.setVisible(true);      
+    PacientListDialogWin.setVisible(false);
+
+PacientInfoDialogWin.pack();
+PacientInfoDialogWin.setLocationRelativeTo(DoctorMainDialogWin);
+PacientInfoDialogWin.setVisible(true);  
     }//GEN-LAST:event_btnPacientListShowPacientActionPerformed
+
+    private void btnPacientListCloseActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPacientListCloseActionPerformed
+       PacientListDialogWin.setVisible(false);
+       DoctorMainDialogWin.setVisible(true);
+    }//GEN-LAST:event_btnPacientListCloseActionPerformed
+
+    private void btnInfoClose1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnInfoClose1ActionPerformed
+        PacientInfoDialogWin.setVisible(false);
+        PacientListDialogWin.setVisible(true);
+    }//GEN-LAST:event_btnInfoClose1ActionPerformed
 
     private void openCalendar() {
 
