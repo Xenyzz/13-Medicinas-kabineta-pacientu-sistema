@@ -17,46 +17,23 @@ public class LietotajsDAO {
 
     public boolean register(Lietotajs lietotajs, String password) {
 
-        String role = lietotajs.getLoma();
-
-        if (!"Pacients".equals(role) && !"Arsts".equals(role)) {
-            return false;
-        }
-
-        if (password == null || password.length() < 4) {
-            return false;
-        }
-
-        String sql = "INSERT INTO lietotajs "
-                + "(vards, uzvards, personas_kods_enc, "
-                + "parole_hash, loma, numurs) "
+        String sql
+                = "INSERT INTO lietotajs "
+                + "(vards, uzvards, personas_kods_enc, parole_hash, loma, numurs) "
                 + "VALUES (?, ?, ?, ?, ?, ?)";
 
-        try (Connection conn = DatabaseManager.getConnection()) {
+        try (Connection conn = DatabaseManager.getConnection(); PreparedStatement ps = conn.prepareStatement(sql)) {
 
-            String checkSql = "SELECT lietotaja_id FROM lietotajs "
-                    + "WHERE personas_kods_enc = ?";
+            ps.setString(1, lietotajs.getVards());
+            ps.setString(2, lietotajs.getUzvards());
+            ps.setString(3, lietotajs.getPersonasKodsEnc());
+            ps.setString(4, PasswordUtil.hash(password));
+            ps.setString(5, lietotajs.getLoma());
+            ps.setString(6, lietotajs.getNumurs());
 
-            try (PreparedStatement check = conn.prepareStatement(checkSql)) {
-                check.setString(1, lietotajs.getPersonasKodsEnc());
+            ps.executeUpdate();
 
-                try (ResultSet rs = check.executeQuery()) {
-                    if (rs.next()) {
-                        return false;
-                    }
-                }
-            }
-
-            try (PreparedStatement ps = conn.prepareStatement(sql)) {
-                ps.setString(1, lietotajs.getVards());
-                ps.setString(2, lietotajs.getUzvards());
-                ps.setString(3, lietotajs.getPersonasKodsEnc());
-                ps.setString(4, PasswordUtil.hash(password));
-                ps.setString(5, role);
-                ps.setString(6, lietotajs.getNumurs());
-
-                return ps.executeUpdate() > 0;
-            }
+            return true;
 
         } catch (SQLException e) {
             e.printStackTrace();
@@ -64,114 +41,42 @@ public class LietotajsDAO {
         }
     }
 
-    public Lietotajs findDoctorByPatientId(int pacientsId) {
+    public int login(String numurs, String password) {
+
         String sql
-                = "SELECT l.lietotaja_id, l.vards, l.uzvards, l.loma "
-                + "FROM lietotajs l "
-                + "JOIN arsta_pacienta_saites a "
-                + "ON l.lietotaja_id = a.arsta_id "
-                + "WHERE a.pacienta_id = ?";
+                = "SELECT lietotaja_id FROM lietotajs "
+                + "WHERE numurs=? AND parole_hash=?";
 
         try (Connection conn = DatabaseManager.getConnection(); PreparedStatement ps = conn.prepareStatement(sql)) {
 
-            ps.setInt(1, pacientsId);
+            ps.setString(1, numurs);
+            ps.setString(2, PasswordUtil.hash(password));
 
-            try (ResultSet rs = ps.executeQuery()) {
-                if (rs.next()) {
-                    Lietotajs doctor = new Lietotajs();
-                    doctor.setId(rs.getInt("lietotaja_id"));
-                    doctor.setVards(rs.getString("vards"));
-                    doctor.setUzvards(rs.getString("uzvards"));
-                    doctor.setLoma(rs.getString("loma"));
+            ResultSet rs = ps.executeQuery();
 
-                    return doctor;
-                }
+            if (rs.next()) {
+                return rs.getInt("lietotaja_id");
             }
 
         } catch (SQLException e) {
             e.printStackTrace();
         }
 
-        return null;
-    }
-
-    public Lietotajs login(String personalCode, String password) {
-
-        String sql = "SELECT * FROM lietotajs WHERE personas_kods_enc = ?";
-
-        try (Connection conn = DatabaseManager.getConnection(); PreparedStatement ps = conn.prepareStatement(sql)) {
-
-            ps.setString(1, personalCode);
-
-            try (ResultSet rs = ps.executeQuery()) {
-
-                if (rs.next()) {
-                    String savedHash = rs.getString("parole_hash");
-                    String enteredHash = PasswordUtil.hash(password);
-
-                    if (savedHash.equals(enteredHash)) {
-                        Lietotajs user = new Lietotajs();
-
-                        user.setId(rs.getInt("lietotaja_id"));
-                        user.setVards(rs.getString("vards"));
-                        user.setUzvards(rs.getString("uzvards"));
-                        user.setPersonasKodsEnc(
-                                rs.getString("personas_kods_enc"));
-                        user.setParoleHash(savedHash);
-                        user.setLoma(rs.getString("loma"));
-                        user.setNumurs(rs.getString("numurs"));
-
-                        return user;
-                    }
-                }
-            }
-
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-
-        return null;
+        return -1;
     }
 
     public Lietotajs findById(int id) {
-
-        String sql = "SELECT lietotaja_id, vards, uzvards, "
-                + "personas_kods_enc, parole_hash, loma, numurs "
-                + "FROM lietotajs WHERE lietotaja_id = ?";
-
-        try (Connection conn = DatabaseManager.getConnection(); PreparedStatement ps = conn.prepareStatement(sql)) {
-
-            ps.setInt(1, id);
-
-            try (ResultSet rs = ps.executeQuery()) {
-                if (rs.next()) {
-                    Lietotajs user = new Lietotajs();
-
-                    user.setId(rs.getInt("lietotaja_id"));
-                    user.setVards(rs.getString("vards"));
-                    user.setUzvards(rs.getString("uzvards"));
-                    user.setPersonasKodsEnc(
-                            rs.getString("personas_kods_enc"));
-                    user.setParoleHash(rs.getString("parole_hash"));
-                    user.setLoma(rs.getString("loma"));
-                    user.setNumurs(rs.getString("numurs"));
-
-                    return user;
-                }
-            }
-
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
 
         return null;
     }
 
     public boolean deleteUser(String username) {
+
         return false;
     }
 
     public boolean assignDoctorToPatient(int pacientsId, int arstsId) {
+
         return false;
     }
 }
