@@ -1188,6 +1188,9 @@
               <Dimension value="[34, 30]"/>
             </Property>
           </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnCalendarPrevActionPerformed"/>
+          </Events>
         </Component>
         <Component class="javax.swing.JButton" name="btnCalendarNext">
           <Properties>
@@ -1196,6 +1199,9 @@
               <Dimension value="[34, 30]"/>
             </Property>
           </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnCalendarNextActionPerformed"/>
+          </Events>
         </Component>
         <Container class="javax.swing.JPanel" name="panelCalendarGrid">
           <Properties>
@@ -1562,9 +1568,9 @@
                               </Group>
                               <Group type="102" alignment="0" attributes="0">
                                   <EmptySpace max="-2" attributes="0"/>
-                                  <Component id="jButton1" min="-2" max="-2" attributes="0"/>
+                                  <Component id="confirmVisitButton" min="-2" max="-2" attributes="0"/>
                                   <EmptySpace min="-2" pref="47" max="-2" attributes="0"/>
-                                  <Component id="jButton2" min="-2" max="-2" attributes="0"/>
+                                  <Component id="cancelVisitButton" min="-2" max="-2" attributes="0"/>
                               </Group>
                           </Group>
                           <EmptySpace min="0" pref="21" max="32767" attributes="0"/>
@@ -1607,8 +1613,8 @@
                   <Component id="txtPlanQuestion" min="-2" max="-2" attributes="0"/>
                   <EmptySpace pref="48" max="32767" attributes="0"/>
                   <Group type="103" groupAlignment="3" attributes="0">
-                      <Component id="jButton1" alignment="3" min="-2" max="-2" attributes="0"/>
-                      <Component id="jButton2" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <Component id="confirmVisitButton" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <Component id="cancelVisitButton" alignment="3" min="-2" max="-2" attributes="0"/>
                   </Group>
                   <EmptySpace min="-2" pref="14" max="-2" attributes="0"/>
               </Group>
@@ -1687,7 +1693,7 @@
             <Property name="text" type="java.lang.String" value="Vai v&#x113;laties rezerv&#x113;t &#x161;o laiku?"/>
           </Properties>
         </Component>
-        <Component class="javax.swing.JButton" name="jButton1">
+        <Component class="javax.swing.JButton" name="confirmVisitButton">
           <Properties>
             <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
               <Color blue="8c" green="50" red="14" type="rgb"/>
@@ -1703,8 +1709,11 @@
               <Dimension value="[200, 45]"/>
             </Property>
           </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="confirmVisitButtonActionPerformed"/>
+          </Events>
         </Component>
-        <Component class="javax.swing.JButton" name="jButton2">
+        <Component class="javax.swing.JButton" name="cancelVisitButton">
           <Properties>
             <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
               <Font name="Segoe UI" size="15" style="1"/>
@@ -1717,6 +1726,9 @@
               <Dimension value="[200, 45]"/>
             </Property>
           </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="cancelVisitButtonActionPerformed"/>
+          </Events>
         </Component>
       </SubComponents>
     </Container>
@@ -2022,6 +2034,9 @@
               <Dimension value="[170, 48]"/>
             </Property>
           </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnCancelNoActionPerformed"/>
+          </Events>
         </Component>
         <Component class="javax.swing.JButton" name="btnCancelYes">
           <Properties>
@@ -2039,6 +2054,9 @@
               <Dimension value="[170, 48]"/>
             </Property>
           </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnCancelYesActionPerformed"/>
+          </Events>
         </Component>
       </SubComponents>
     </Container>
@@ -2232,6 +2250,9 @@
               <Dimension value="[170, 48]"/>
             </Property>
           </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnConfirmNoActionPerformed"/>
+          </Events>
         </Component>
         <Component class="javax.swing.JButton" name="btnConfirmYes">
           <Properties>
@@ -2249,6 +2270,9 @@
               <Dimension value="[170, 48]"/>
             </Property>
           </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnConfirmYesActionPerformed"/>
+          </Events>
         </Component>
       </SubComponents>
     </Container>
@@ -2920,8 +2944,8 @@
               <Group type="102" alignment="0" attributes="0">
                   <EmptySpace min="-2" pref="24" max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                      <Component id="scrollPacientPreview" min="-2" max="-2" attributes="0"/>
-                      <Group type="102" attributes="0">
+                      <Component id="scrollPacientPreview" alignment="0" min="-2" max="-2" attributes="0"/>
+                      <Group type="102" alignment="0" attributes="0">
                           <Component id="jComboPacientListPacient" min="-2" pref="156" max="-2" attributes="0"/>
                           <EmptySpace max="32767" attributes="0"/>
                           <Component id="btnPacientListShowPacient" min="-2" pref="171" max="-2" attributes="0"/>
@@ -3022,25 +3046,6 @@
                   </Table>
                 </Property>
                 <Property name="toolTipText" type="java.lang.String" value=""/>
-                <Property name="columnModel" type="javax.swing.table.TableColumnModel" editor="org.netbeans.modules.form.editors2.TableColumnModelEditor">
-                  <TableColumnModel selectionModel="0">
-                    <Column maxWidth="-1" minWidth="-1" prefWidth="-1" resizable="true">
-                      <Title/>
-                      <Editor/>
-                      <Renderer/>
-                    </Column>
-                    <Column maxWidth="-1" minWidth="-1" prefWidth="-1" resizable="true">
-                      <Title/>
-                      <Editor/>
-                      <Renderer/>
-                    </Column>
-                    <Column maxWidth="-1" minWidth="-1" prefWidth="-1" resizable="true">
-                      <Title/>
-                      <Editor/>
-                      <Renderer/>
-                    </Column>
-                  </TableColumnModel>
-                </Property>
                 <Property name="fillsViewportHeight" type="boolean" value="true"/>
                 <Property name="rowHeight" type="int" value="34"/>
                 <Property name="selectionBackground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
