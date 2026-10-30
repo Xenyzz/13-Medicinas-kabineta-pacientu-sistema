@@ -322,11 +322,4 @@ try (java.sql.Statement st = conn.createStatement();
 }
 return patients;
 } 
-   
-
-
-
-
-
-
 }
