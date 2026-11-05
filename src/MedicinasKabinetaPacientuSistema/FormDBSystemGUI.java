@@ -108,7 +108,6 @@ public class FormDBSystemGUI extends javax.swing.JFrame {
         txtGreetingMain = new javax.swing.JLabel();
         txtRole = new javax.swing.JLabel();
         jPanel2 = new javax.swing.JPanel();
-        btnBeggining = new javax.swing.JButton();
         btnRelate = new javax.swing.JButton();
         btnRegUser = new javax.swing.JButton();
         btnExit = new javax.swing.JButton();
@@ -539,15 +538,6 @@ public class FormDBSystemGUI extends javax.swing.JFrame {
 
         jPanel2.setBorder(javax.swing.BorderFactory.createEtchedBorder());
 
-        btnBeggining.setForeground(new java.awt.Color(23, 71, 122));
-        btnBeggining.setText("\t🏠 Sākums");
-        btnBeggining.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(23, 71, 122)));
-        btnBeggining.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnBegginingActionPerformed(evt);
-            }
-        });
-
         btnRelate.setForeground(new java.awt.Color(23, 71, 122));
         btnRelate.setText("Savienot ārstu un pacientu");
         btnRelate.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(23, 71, 122)));
@@ -583,7 +573,6 @@ public class FormDBSystemGUI extends javax.swing.JFrame {
                 .addContainerGap()
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(btnExit, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(btnBeggining, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(btnRegUser, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel2Layout.createSequentialGroup()
                         .addComponent(btnRelate, javax.swing.GroupLayout.PREFERRED_SIZE, 158, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -593,9 +582,7 @@ public class FormDBSystemGUI extends javax.swing.JFrame {
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(btnBeggining, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
+                .addGap(62, 62, 62)
                 .addComponent(btnRelate, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(btnRegUser, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -626,16 +613,18 @@ public class FormDBSystemGUI extends javax.swing.JFrame {
         AdminMainDialogWinLayout.setVerticalGroup(
             AdminMainDialogWinLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(AdminMainDialogWinLayout.createSequentialGroup()
-                .addGap(28, 28, 28)
-                .addComponent(txtName)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(AdminMainDialogWinLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(AdminMainDialogWinLayout.createSequentialGroup()
+                        .addGap(28, 28, 28)
+                        .addComponent(txtName)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(txtRole)
                         .addGap(28, 28, 28)
                         .addComponent(txtGreetingMain))
-                    .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(172, Short.MAX_VALUE))
+                    .addGroup(AdminMainDialogWinLayout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(216, Short.MAX_VALUE))
         );
 
         AdminDialogWin.setTitle("Pacientu un ārstu sasaistīšana");
@@ -2363,10 +2352,6 @@ public class FormDBSystemGUI extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_comboBoxRegisterRoleActionPerformed
 
-    private void btnBegginingActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBegginingActionPerformed
-
-    }//GEN-LAST:event_btnBegginingActionPerformed
-
     private void btnRegUserActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRegUserActionPerformed
         RegisterDialogWin.setVisible(true);
         this.setVisible(false);
@@ -3432,7 +3417,6 @@ public class FormDBSystemGUI extends javax.swing.JFrame {
     private javax.swing.JButton ShowTablesDB;
     private javax.swing.JButton btnAssignCancel;
     private javax.swing.JButton btnAssignConfirm;
-    private javax.swing.JButton btnBeggining;
     private javax.swing.JButton btnBeggining2;
     private javax.swing.JButton btnCalendarNext;
     private javax.swing.JButton btnCalendarPrev;

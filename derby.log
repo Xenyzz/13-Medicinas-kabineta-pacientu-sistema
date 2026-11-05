@@ -1,8 +1,8 @@
 ----------------------------------------------------------------
-Thu Nov 05 09:27:56 EET 2026:
-Booting Derby version The Apache Software Foundation - Apache Derby - 10.17.1.0 - (1913217): instance a816c00e-01a1-aa9b-7232-00000f9b4c90 
+Thu Nov 05 11:04:22 EET 2026:
+Booting Derby version The Apache Software Foundation - Apache Derby - 10.17.1.0 - (1913217): instance a816c00e-01a1-aaf3-baf4-00000fb00ae0 
 on database directory D:\Users\Nikita.Sersts\Downloads\13-Medicinas-kabineta-pacientu-sistema-master (1)\13-Medicinas-kabineta-pacientu-sistema-master-copy\database\med_db with class loader jdk.internal.loader.ClassLoaders$AppClassLoader@33909752 
-Loaded from file:/D:/Users/Nikita.Sersts/Documents/NetBeansProjects/11-Medicinas-kabineta-pacientu-sistema/src/lib/derby.jar
+Loaded from file:/D:/Users/Nikita.Sersts/Downloads/13-Medicinas-kabineta-pacientu-sistema-master%20(1)/13-Medicinas-kabineta-pacientu-sistema-master-copy/src/lib/derby.jar
 java.vendor=Oracle Corporation
 java.runtime.version=21.0.6+8-LTS-188
 user.dir=D:\Users\Nikita.Sersts\Downloads\13-Medicinas-kabineta-pacientu-sistema-master (1)\13-Medicinas-kabineta-pacientu-sistema-master-copy
