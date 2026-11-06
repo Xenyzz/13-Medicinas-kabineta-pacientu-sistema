@@ -20,8 +20,9 @@ import java.util.List;
 
 public class RecepteDAO {
 
-    // Pievieno jaunu recepti
-    public void add(Recepte recepte) {
+    // Pievieno jaunu recepti datubazei
+    public boolean add(Recepte recepte) {
+
         String sql = "INSERT INTO receptes "
                 + "(pacienta_id, medikamenta_nosaukums, apraksts, izsniegsanas_datums) "
                 + "VALUES (?, ?, ?, ?)";
@@ -39,15 +40,17 @@ public class RecepteDAO {
                 ps.setNull(4, java.sql.Types.DATE);
             }
 
-            ps.executeUpdate();
+            return ps.executeUpdate() > 0;
 
         } catch (SQLException e) {
             e.printStackTrace();
+            return false;
         }
     }
 
     // Atgriez visas receptes konkretam pacientam
     public List<Recepte> getReceptesByPacientsId(int pacientsId) {
+
         List<Recepte> receptes = new ArrayList<>();
 
         String sql = "SELECT receptes_id, pacienta_id, "
@@ -61,14 +64,19 @@ public class RecepteDAO {
             ps.setInt(1, pacientsId);
 
             try (ResultSet rs = ps.executeQuery()) {
+
                 while (rs.next()) {
+
                     Recepte recepte = new Recepte();
 
                     recepte.setId(rs.getInt("receptes_id"));
                     recepte.setPacientsId(rs.getInt("pacienta_id"));
+
                     recepte.setMedikamentaNosaukums(
                             rs.getString("medikamenta_nosaukums"));
-                    recepte.setApraksts(rs.getString("apraksts"));
+
+                    recepte.setApraksts(
+                            rs.getString("apraksts"));
 
                     java.sql.Date datums
                             = rs.getDate("izsniegsanas_datums");
