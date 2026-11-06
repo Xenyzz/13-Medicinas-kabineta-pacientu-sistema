@@ -229,6 +229,20 @@ public class FormDBSystemGUI extends javax.swing.JFrame {
         jSeparator13 = new javax.swing.JSeparator();
         txtInfoHeading = new javax.swing.JLabel();
         btnInfoClose = new javax.swing.JButton();
+        PrescriptionAddDialogWin = new javax.swing.JDialog();
+        jPanel7 = new javax.swing.JPanel();
+        txtInfoDrugLabel1 = new javax.swing.JLabel();
+        jSeparator18 = new javax.swing.JSeparator();
+        txtInfoDoseLabel1 = new javax.swing.JLabel();
+        txtInfoUsageLabel1 = new javax.swing.JLabel();
+        jSeparator19 = new javax.swing.JSeparator();
+        jSeparator20 = new javax.swing.JSeparator();
+        fieldDrugLabel = new javax.swing.JTextField();
+        fieldInfoUsage = new javax.swing.JTextField();
+        fieldDrugDoseValue = new javax.swing.JTextField();
+        txtInfoHeading2 = new javax.swing.JLabel();
+        btnInfoClose2 = new javax.swing.JButton();
+        btnAddDrug = new javax.swing.JButton();
         DoctorMainDialogWin = new javax.swing.JDialog();
         txtName2 = new javax.swing.JLabel();
         txtGreetingMain2 = new javax.swing.JLabel();
@@ -267,6 +281,7 @@ public class FormDBSystemGUI extends javax.swing.JFrame {
         txtInfoHeading1 = new javax.swing.JLabel();
         btnInfoClose1 = new javax.swing.JButton();
         BtnAddDiagnoz = new javax.swing.JButton();
+        btnAddPrescription = new javax.swing.JButton();
         BtnLoginForm = new javax.swing.JButton();
         txtGreeting = new javax.swing.JLabel();
         ShowTablesDB = new javax.swing.JButton();
@@ -1826,6 +1841,121 @@ public class FormDBSystemGUI extends javax.swing.JFrame {
                 .addContainerGap(35, Short.MAX_VALUE))
         );
 
+        PrescriptionAddDialogWin.setTitle("Receptes informācija");
+        PrescriptionAddDialogWin.setBackground(new java.awt.Color(243, 246, 250));
+        PrescriptionAddDialogWin.setResizable(false);
+
+        jPanel7.setBackground(new java.awt.Color(255, 255, 255));
+
+        txtInfoDrugLabel1.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        txtInfoDrugLabel1.setText("Zāles:");
+
+        txtInfoDoseLabel1.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        txtInfoDoseLabel1.setText("Deva:");
+
+        txtInfoUsageLabel1.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        txtInfoUsageLabel1.setText("Lietošana:");
+
+        javax.swing.GroupLayout jPanel7Layout = new javax.swing.GroupLayout(jPanel7);
+        jPanel7.setLayout(jPanel7Layout);
+        jPanel7Layout.setHorizontalGroup(
+            jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel7Layout.createSequentialGroup()
+                .addGap(16, 16, 16)
+                .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jSeparator20)
+                    .addComponent(jSeparator19)
+                    .addComponent(jSeparator18)
+                    .addGroup(jPanel7Layout.createSequentialGroup()
+                        .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jPanel7Layout.createSequentialGroup()
+                                .addComponent(txtInfoDrugLabel1)
+                                .addGap(93, 93, 93)
+                                .addComponent(fieldDrugLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 170, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(jPanel7Layout.createSequentialGroup()
+                                .addComponent(txtInfoDoseLabel1)
+                                .addGap(95, 95, 95)
+                                .addComponent(fieldDrugDoseValue, javax.swing.GroupLayout.PREFERRED_SIZE, 170, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGap(0, 0, Short.MAX_VALUE))
+                    .addGroup(jPanel7Layout.createSequentialGroup()
+                        .addComponent(txtInfoUsageLabel1)
+                        .addGap(66, 66, 66)
+                        .addComponent(fieldInfoUsage, javax.swing.GroupLayout.PREFERRED_SIZE, 170, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                .addContainerGap())
+        );
+        jPanel7Layout.setVerticalGroup(
+            jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel7Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(txtInfoDrugLabel1)
+                    .addComponent(fieldDrugLabel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jSeparator18, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(txtInfoDoseLabel1)
+                    .addComponent(fieldDrugDoseValue, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jSeparator19, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(txtInfoUsageLabel1)
+                    .addComponent(fieldInfoUsage, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jSeparator20, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(36, Short.MAX_VALUE))
+        );
+
+        txtInfoHeading2.setFont(new java.awt.Font("Segoe UI", 1, 22)); // NOI18N
+        txtInfoHeading2.setForeground(new java.awt.Color(23, 71, 122));
+        txtInfoHeading2.setText("Receptes informācija");
+
+        btnInfoClose2.setBackground(new java.awt.Color(20, 80, 140));
+        btnInfoClose2.setFont(new java.awt.Font("Segoe UI", 1, 15)); // NOI18N
+        btnInfoClose2.setForeground(new java.awt.Color(255, 255, 255));
+        btnInfoClose2.setText("Aizvērt");
+        btnInfoClose2.setPreferredSize(new java.awt.Dimension(155, 35));
+
+        btnAddDrug.setFont(new java.awt.Font("Segoe UI", 1, 15)); // NOI18N
+        btnAddDrug.setForeground(new java.awt.Color(20, 80, 140));
+        btnAddDrug.setText("Pievienot");
+        btnAddDrug.setPreferredSize(new java.awt.Dimension(200, 45));
+
+        javax.swing.GroupLayout PrescriptionAddDialogWinLayout = new javax.swing.GroupLayout(PrescriptionAddDialogWin.getContentPane());
+        PrescriptionAddDialogWin.getContentPane().setLayout(PrescriptionAddDialogWinLayout);
+        PrescriptionAddDialogWinLayout.setHorizontalGroup(
+            PrescriptionAddDialogWinLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(PrescriptionAddDialogWinLayout.createSequentialGroup()
+                .addGroup(PrescriptionAddDialogWinLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jPanel7, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addGroup(PrescriptionAddDialogWinLayout.createSequentialGroup()
+                        .addGap(30, 30, 30)
+                        .addComponent(btnInfoClose2, javax.swing.GroupLayout.PREFERRED_SIZE, 121, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(92, 92, 92)
+                        .addComponent(btnAddDrug, javax.swing.GroupLayout.PREFERRED_SIZE, 134, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(0, 46, Short.MAX_VALUE)))
+                .addContainerGap())
+            .addGroup(PrescriptionAddDialogWinLayout.createSequentialGroup()
+                .addGap(98, 98, 98)
+                .addComponent(txtInfoHeading2)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+        PrescriptionAddDialogWinLayout.setVerticalGroup(
+            PrescriptionAddDialogWinLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(PrescriptionAddDialogWinLayout.createSequentialGroup()
+                .addGap(22, 22, 22)
+                .addComponent(txtInfoHeading2)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jPanel7, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addGroup(PrescriptionAddDialogWinLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(btnAddDrug, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
+                    .addComponent(btnInfoClose2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(33, Short.MAX_VALUE))
+        );
+
         DoctorMainDialogWin.setTitle("Medicīnas kabinets");
         DoctorMainDialogWin.addWindowListener(new java.awt.event.WindowAdapter() {
             public void windowClosing(java.awt.event.WindowEvent evt) {
@@ -2207,21 +2337,31 @@ public class FormDBSystemGUI extends javax.swing.JFrame {
             }
         });
 
+        btnAddPrescription.setText("Pievienot recepte");
+        btnAddPrescription.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnAddPrescriptionActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout PacientInfoDialogWinLayout = new javax.swing.GroupLayout(PacientInfoDialogWin.getContentPane());
         PacientInfoDialogWin.getContentPane().setLayout(PacientInfoDialogWinLayout);
         PacientInfoDialogWinLayout.setHorizontalGroup(
             PacientInfoDialogWinLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(jPanel6, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addGroup(PacientInfoDialogWinLayout.createSequentialGroup()
-                .addGap(32, 32, 32)
-                .addComponent(txtInfoHeading1)
-                .addContainerGap(256, Short.MAX_VALUE))
-            .addGroup(PacientInfoDialogWinLayout.createSequentialGroup()
-                .addGap(71, 71, 71)
-                .addComponent(btnInfoClose1, javax.swing.GroupLayout.PREFERRED_SIZE, 121, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(BtnAddDiagnoz)
-                .addGap(90, 90, 90))
+                .addGroup(PacientInfoDialogWinLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(PacientInfoDialogWinLayout.createSequentialGroup()
+                        .addGap(32, 32, 32)
+                        .addComponent(txtInfoHeading1))
+                    .addGroup(PacientInfoDialogWinLayout.createSequentialGroup()
+                        .addGap(25, 25, 25)
+                        .addComponent(btnInfoClose1, javax.swing.GroupLayout.PREFERRED_SIZE, 121, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(30, 30, 30)
+                        .addComponent(BtnAddDiagnoz)
+                        .addGap(28, 28, 28)
+                        .addComponent(btnAddPrescription)))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         PacientInfoDialogWinLayout.setVerticalGroup(
             PacientInfoDialogWinLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -2232,10 +2372,9 @@ public class FormDBSystemGUI extends javax.swing.JFrame {
                 .addComponent(jPanel6, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(PacientInfoDialogWinLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(btnInfoClose1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGroup(PacientInfoDialogWinLayout.createSequentialGroup()
-                        .addComponent(BtnAddDiagnoz, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addGap(4, 4, 4)))
+                    .addComponent(btnInfoClose1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(BtnAddDiagnoz, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(btnAddPrescription, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap(35, Short.MAX_VALUE))
         );
 
@@ -3010,6 +3149,10 @@ public class FormDBSystemGUI extends javax.swing.JFrame {
         updateAssignmentDetails();
     }//GEN-LAST:event_comboAssignPatientActionPerformed
 
+    private void btnAddPrescriptionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddPrescriptionActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnAddPrescriptionActionPerformed
+
     private void openCalendar() {
 
         if (loggedInUser == null) {
@@ -3411,10 +3554,13 @@ public class FormDBSystemGUI extends javax.swing.JFrame {
     private javax.swing.JDialog PacientListDialogWin;
     private javax.swing.JDialog PacientMainDialogWin;
     private javax.swing.JDialog PlanDialogWin;
+    private javax.swing.JDialog PrescriptionAddDialogWin;
     private javax.swing.JDialog PrescriptionDialogWin;
     private javax.swing.JDialog PrescriptionInfoDialogWin;
     private javax.swing.JDialog RegisterDialogWin;
     private javax.swing.JButton ShowTablesDB;
+    private javax.swing.JButton btnAddDrug;
+    private javax.swing.JButton btnAddPrescription;
     private javax.swing.JButton btnAssignCancel;
     private javax.swing.JButton btnAssignConfirm;
     private javax.swing.JButton btnBeggining2;
@@ -3430,6 +3576,7 @@ public class FormDBSystemGUI extends javax.swing.JFrame {
     private javax.swing.JButton btnHistoryClose;
     private javax.swing.JButton btnInfoClose;
     private javax.swing.JButton btnInfoClose1;
+    private javax.swing.JButton btnInfoClose2;
     private javax.swing.JButton btnLogin;
     private javax.swing.JButton btnPacientListClose;
     private javax.swing.JButton btnPacientListShowPacient;
@@ -3449,6 +3596,9 @@ public class FormDBSystemGUI extends javax.swing.JFrame {
     private javax.swing.JComboBox<String> comboBoxRegisterRole;
     private javax.swing.JComboBox<String> comboCalendarDoctor;
     private javax.swing.JButton confirmVisitButton;
+    private javax.swing.JTextField fieldDrugDoseValue;
+    private javax.swing.JTextField fieldDrugLabel;
+    private javax.swing.JTextField fieldInfoUsage;
     private javax.swing.JTextField fieldLoginName;
     private javax.swing.JTextField fieldLoginPassword;
     private javax.swing.JTextField fieldLoginPersonalCode;
@@ -3466,6 +3616,7 @@ public class FormDBSystemGUI extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel4;
     private javax.swing.JPanel jPanel5;
     private javax.swing.JPanel jPanel6;
+    private javax.swing.JPanel jPanel7;
     private javax.swing.JSeparator jSeparator1;
     private javax.swing.JSeparator jSeparator10;
     private javax.swing.JSeparator jSeparator11;
@@ -3475,7 +3626,10 @@ public class FormDBSystemGUI extends javax.swing.JFrame {
     private javax.swing.JSeparator jSeparator15;
     private javax.swing.JSeparator jSeparator16;
     private javax.swing.JSeparator jSeparator17;
+    private javax.swing.JSeparator jSeparator18;
+    private javax.swing.JSeparator jSeparator19;
     private javax.swing.JSeparator jSeparator2;
+    private javax.swing.JSeparator jSeparator20;
     private javax.swing.JSeparator jSeparator3;
     private javax.swing.JSeparator jSeparator4;
     private javax.swing.JSeparator jSeparator5;
@@ -3528,12 +3682,16 @@ public class FormDBSystemGUI extends javax.swing.JFrame {
     private javax.swing.JLabel txtInfoDoctorLabel;
     private javax.swing.JLabel txtInfoDoctorValue;
     private javax.swing.JLabel txtInfoDoseLabel;
+    private javax.swing.JLabel txtInfoDoseLabel1;
     private javax.swing.JLabel txtInfoDoseValue;
     private javax.swing.JLabel txtInfoDrugLabel;
+    private javax.swing.JLabel txtInfoDrugLabel1;
     private javax.swing.JLabel txtInfoDrugValue;
     private javax.swing.JLabel txtInfoHeading;
     private javax.swing.JLabel txtInfoHeading1;
+    private javax.swing.JLabel txtInfoHeading2;
     private javax.swing.JLabel txtInfoUsageLabel;
+    private javax.swing.JLabel txtInfoUsageLabel1;
     private javax.swing.JLabel txtInfoUsageValue;
     private javax.swing.JLabel txtLegendBusy;
     private javax.swing.JLabel txtLegendBusyDot;
