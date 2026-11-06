@@ -2473,6 +2473,9 @@
                   <Dimension value="[120, 30]"/>
                 </Property>
               </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnPrescriptionCloseActionPerformed"/>
+              </Events>
             </Component>
           </SubComponents>
         </Container>
@@ -3178,7 +3181,7 @@
         </Container>
       </SubComponents>
     </Container>
-    <Container class="javax.swing.JDialog" name="PacientListDialogWin">
+    <Container class="javax.swing.JDialog" name="UserListDialogWin">
       <Properties>
         <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
           <Color blue="ff" green="ff" red="ff" type="rgb"/>
@@ -3190,15 +3193,15 @@
           <Group type="103" groupAlignment="0" attributes="0">
               <Group type="102" alignment="0" attributes="0">
                   <Group type="103" groupAlignment="0" attributes="0">
-                      <Component id="panelPacientListHeader" alignment="0" min="-2" max="-2" attributes="0"/>
-                      <Component id="panelPacientListFooter" alignment="0" min="-2" max="-2" attributes="0"/>
+                      <Component id="panelUserListHeader" alignment="0" min="-2" max="-2" attributes="0"/>
+                      <Component id="panelUserListFooter" alignment="0" min="-2" max="-2" attributes="0"/>
                   </Group>
                   <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
               </Group>
               <Group type="102" alignment="0" attributes="0">
                   <EmptySpace min="-2" pref="24" max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                      <Component id="scrollPacientPreview" alignment="0" min="-2" max="-2" attributes="0"/>
+                      <Component id="scrollUserPreview" alignment="0" min="-2" max="-2" attributes="0"/>
                       <Group type="102" alignment="0" attributes="0">
                           <Component id="ComboUserList" min="-2" pref="156" max="-2" attributes="0"/>
                           <EmptySpace max="32767" attributes="0"/>
@@ -3212,22 +3215,22 @@
         <DimensionLayout dim="1">
           <Group type="103" groupAlignment="0" attributes="0">
               <Group type="102" alignment="0" attributes="0">
-                  <Component id="panelPacientListHeader" min="-2" max="-2" attributes="0"/>
+                  <Component id="panelUserListHeader" min="-2" max="-2" attributes="0"/>
                   <EmptySpace min="-2" pref="49" max="-2" attributes="0"/>
-                  <Component id="scrollPacientPreview" min="-2" pref="321" max="-2" attributes="0"/>
+                  <Component id="scrollUserPreview" min="-2" pref="321" max="-2" attributes="0"/>
                   <EmptySpace pref="19" max="32767" attributes="0"/>
                   <Group type="103" groupAlignment="3" attributes="0">
                       <Component id="ComboUserList" alignment="3" min="-2" pref="28" max="-2" attributes="0"/>
                       <Component id="btnDeleteUser" alignment="3" pref="28" max="32767" attributes="0"/>
                   </Group>
                   <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                  <Component id="panelPacientListFooter" min="-2" max="-2" attributes="0"/>
+                  <Component id="panelUserListFooter" min="-2" max="-2" attributes="0"/>
               </Group>
           </Group>
         </DimensionLayout>
       </Layout>
       <SubComponents>
-        <Container class="javax.swing.JPanel" name="panelPacientListHeader">
+        <Container class="javax.swing.JPanel" name="panelUserListHeader">
           <Properties>
             <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
               <Color blue="fa" green="eb" red="de" type="rgb"/>
@@ -3272,7 +3275,7 @@
             </Component>
           </SubComponents>
         </Container>
-        <Container class="javax.swing.JScrollPane" name="scrollPacientPreview">
+        <Container class="javax.swing.JScrollPane" name="scrollUserPreview">
           <Properties>
             <Property name="preferredSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
               <Dimension value="[412, 122]"/>
@@ -3318,7 +3321,7 @@
             </Component>
           </SubComponents>
         </Container>
-        <Container class="javax.swing.JPanel" name="panelPacientListFooter">
+        <Container class="javax.swing.JPanel" name="panelUserListFooter">
           <Properties>
             <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
               <Color blue="fa" green="eb" red="de" type="rgb"/>
@@ -3333,7 +3336,7 @@
               <Group type="103" groupAlignment="0" attributes="0">
                   <Group type="102" alignment="1" attributes="0">
                       <EmptySpace pref="315" max="32767" attributes="0"/>
-                      <Component id="btnPacientListClose" min="-2" max="-2" attributes="0"/>
+                      <Component id="btnUserListClose" min="-2" max="-2" attributes="0"/>
                       <EmptySpace min="-2" pref="25" max="-2" attributes="0"/>
                   </Group>
               </Group>
@@ -3342,14 +3345,14 @@
               <Group type="103" groupAlignment="0" attributes="0">
                   <Group type="102" alignment="1" attributes="0">
                       <EmptySpace pref="14" max="32767" attributes="0"/>
-                      <Component id="btnPacientListClose" min="-2" max="-2" attributes="0"/>
+                      <Component id="btnUserListClose" min="-2" max="-2" attributes="0"/>
                       <EmptySpace max="-2" attributes="0"/>
                   </Group>
               </Group>
             </DimensionLayout>
           </Layout>
           <SubComponents>
-            <Component class="javax.swing.JButton" name="btnPacientListClose">
+            <Component class="javax.swing.JButton" name="btnUserListClose">
               <Properties>
                 <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
                   <Font name="Segoe UI" size="14" style="0"/>
@@ -3370,7 +3373,7 @@
                 </Property>
               </Properties>
               <Events>
-                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnPacientListCloseActionPerformed"/>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnUserListCloseActionPerformed"/>
               </Events>
             </Component>
           </SubComponents>
@@ -3687,7 +3690,7 @@
         </Component>
       </SubComponents>
     </Container>
-    <Container class="javax.swing.JDialog" name="UsersListDialogWin">
+    <Container class="javax.swing.JDialog" name="PacientListDialogWin">
       <Properties>
         <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
           <Color blue="ff" green="ff" red="ff" type="rgb"/>
@@ -3699,19 +3702,19 @@
           <Group type="103" groupAlignment="0" attributes="0">
               <Group type="102" alignment="0" attributes="0">
                   <Group type="103" groupAlignment="0" attributes="0">
-                      <Component id="panelPacientListHeader1" alignment="0" min="-2" max="-2" attributes="0"/>
-                      <Component id="panelPacientListFooter1" alignment="0" min="-2" max="-2" attributes="0"/>
+                      <Component id="panelPacientListHeader" alignment="0" min="-2" max="-2" attributes="0"/>
+                      <Component id="panelPacientListFooter" alignment="0" min="-2" max="-2" attributes="0"/>
                   </Group>
                   <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
               </Group>
               <Group type="102" alignment="0" attributes="0">
                   <EmptySpace min="-2" pref="24" max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                      <Component id="scrollPacientPreview1" alignment="0" min="-2" max="-2" attributes="0"/>
+                      <Component id="scrollPacientPreview" alignment="0" min="-2" max="-2" attributes="0"/>
                       <Group type="102" alignment="0" attributes="0">
-                          <Component id="jComboPacientListPacient1" min="-2" pref="156" max="-2" attributes="0"/>
+                          <Component id="jComboPacientListPacient" min="-2" pref="156" max="-2" attributes="0"/>
                           <EmptySpace max="32767" attributes="0"/>
-                          <Component id="btnPacientListShowPacient1" min="-2" pref="171" max="-2" attributes="0"/>
+                          <Component id="btnPacientListShowPacient" min="-2" pref="171" max="-2" attributes="0"/>
                       </Group>
                   </Group>
                   <EmptySpace max="32767" attributes="0"/>
@@ -3721,22 +3724,22 @@
         <DimensionLayout dim="1">
           <Group type="103" groupAlignment="0" attributes="0">
               <Group type="102" alignment="0" attributes="0">
-                  <Component id="panelPacientListHeader1" min="-2" max="-2" attributes="0"/>
+                  <Component id="panelPacientListHeader" min="-2" max="-2" attributes="0"/>
                   <EmptySpace min="-2" pref="49" max="-2" attributes="0"/>
-                  <Component id="scrollPacientPreview1" min="-2" pref="321" max="-2" attributes="0"/>
+                  <Component id="scrollPacientPreview" min="-2" pref="321" max="-2" attributes="0"/>
                   <EmptySpace pref="19" max="32767" attributes="0"/>
                   <Group type="103" groupAlignment="3" attributes="0">
-                      <Component id="jComboPacientListPacient1" alignment="3" min="-2" pref="28" max="-2" attributes="0"/>
-                      <Component id="btnPacientListShowPacient1" alignment="3" pref="28" max="32767" attributes="0"/>
+                      <Component id="jComboPacientListPacient" alignment="3" min="-2" pref="28" max="-2" attributes="0"/>
+                      <Component id="btnPacientListShowPacient" alignment="3" pref="28" max="32767" attributes="0"/>
                   </Group>
                   <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                  <Component id="panelPacientListFooter1" min="-2" max="-2" attributes="0"/>
+                  <Component id="panelPacientListFooter" min="-2" max="-2" attributes="0"/>
               </Group>
           </Group>
         </DimensionLayout>
       </Layout>
       <SubComponents>
-        <Container class="javax.swing.JPanel" name="panelPacientListHeader1">
+        <Container class="javax.swing.JPanel" name="panelPacientListHeader">
           <Properties>
             <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
               <Color blue="fa" green="eb" red="de" type="rgb"/>
@@ -3781,7 +3784,7 @@
             </Component>
           </SubComponents>
         </Container>
-        <Container class="javax.swing.JScrollPane" name="scrollPacientPreview1">
+        <Container class="javax.swing.JScrollPane" name="scrollPacientPreview">
           <Properties>
             <Property name="preferredSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
               <Dimension value="[412, 122]"/>
@@ -3793,7 +3796,7 @@
 
           <Layout class="org.netbeans.modules.form.compat2.layouts.support.JScrollPaneSupportLayout"/>
           <SubComponents>
-            <Component class="javax.swing.JTable" name="tablePacientPreview1">
+            <Component class="javax.swing.JTable" name="tablePacientPreview">
               <Properties>
                 <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
                   <Font name="Segoe UI" size="14" style="0"/>
@@ -3827,7 +3830,7 @@
             </Component>
           </SubComponents>
         </Container>
-        <Container class="javax.swing.JPanel" name="panelPacientListFooter1">
+        <Container class="javax.swing.JPanel" name="panelPacientListFooter">
           <Properties>
             <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
               <Color blue="fa" green="eb" red="de" type="rgb"/>
@@ -3884,7 +3887,7 @@
             </Component>
           </SubComponents>
         </Container>
-        <Component class="javax.swing.JComboBox" name="jComboPacientListPacient1">
+        <Component class="javax.swing.JComboBox" name="jComboPacientListPacient">
           <Properties>
             <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
               <StringArray count="4">
@@ -3899,12 +3902,12 @@
             <AuxValue name="JavaCodeGenerator_TypeParameters" type="java.lang.String" value="&lt;String&gt;"/>
           </AuxValues>
         </Component>
-        <Component class="javax.swing.JButton" name="btnPacientListShowPacient1">
+        <Component class="javax.swing.JButton" name="btnPacientListShowPacient">
           <Properties>
             <Property name="text" type="java.lang.String" value="Apskat&#x12b;t pacientu"/>
           </Properties>
           <Events>
-            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnPacientListShowPacient1ActionPerformed"/>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnPacientListShowPacientActionPerformed"/>
           </Events>
         </Component>
       </SubComponents>
@@ -3932,38 +3935,38 @@
   <Layout>
     <DimensionLayout dim="0">
       <Group type="103" groupAlignment="0" attributes="0">
-          <Group type="102" attributes="0">
-              <Group type="103" groupAlignment="0" attributes="0">
-                  <Group type="102" alignment="0" attributes="0">
-                      <EmptySpace min="-2" pref="69" max="-2" attributes="0"/>
-                      <Component id="BtnLoginForm" min="-2" pref="270" max="-2" attributes="0"/>
-                  </Group>
-                  <Group type="102" alignment="0" attributes="0">
-                      <EmptySpace min="-2" pref="164" max="-2" attributes="0"/>
-                      <Component id="txtGreeting" min="-2" max="-2" attributes="0"/>
-                  </Group>
-              </Group>
-              <EmptySpace pref="111" max="32767" attributes="0"/>
-          </Group>
           <Group type="102" alignment="0" attributes="0">
               <EmptySpace min="-2" pref="29" max="-2" attributes="0"/>
               <Component id="FillDB" min="-2" max="-2" attributes="0"/>
-              <EmptySpace max="32767" attributes="0"/>
+              <EmptySpace pref="71" max="32767" attributes="0"/>
               <Component id="ClearDB" min="-2" max="-2" attributes="0"/>
               <EmptySpace min="-2" pref="69" max="-2" attributes="0"/>
               <Component id="ShowTablesDB" min="-2" max="-2" attributes="0"/>
               <EmptySpace min="-2" pref="18" max="-2" attributes="0"/>
+          </Group>
+          <Group type="102" attributes="0">
+              <Group type="103" groupAlignment="0" attributes="0">
+                  <Group type="102" attributes="0">
+                      <EmptySpace min="-2" pref="185" max="-2" attributes="0"/>
+                      <Component id="txtGreeting" min="-2" max="-2" attributes="0"/>
+                  </Group>
+                  <Group type="102" alignment="0" attributes="0">
+                      <EmptySpace min="-2" pref="89" max="-2" attributes="0"/>
+                      <Component id="BtnLoginForm" min="-2" pref="270" max="-2" attributes="0"/>
+                  </Group>
+              </Group>
+              <EmptySpace max="32767" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
     <DimensionLayout dim="1">
       <Group type="103" groupAlignment="0" attributes="0">
           <Group type="102" alignment="0" attributes="0">
-              <EmptySpace min="-2" pref="23" max="-2" attributes="0"/>
+              <EmptySpace min="-2" pref="49" max="-2" attributes="0"/>
               <Component id="txtGreeting" min="-2" max="-2" attributes="0"/>
-              <EmptySpace min="-2" pref="87" max="-2" attributes="0"/>
+              <EmptySpace min="-2" pref="97" max="-2" attributes="0"/>
               <Component id="BtnLoginForm" min="-2" pref="50" max="-2" attributes="0"/>
-              <EmptySpace pref="172" max="32767" attributes="0"/>
+              <EmptySpace pref="136" max="32767" attributes="0"/>
               <Group type="103" groupAlignment="3" attributes="0">
                   <Component id="ShowTablesDB" alignment="3" min="-2" max="-2" attributes="0"/>
                   <Component id="FillDB" alignment="3" min="-2" max="-2" attributes="0"/>

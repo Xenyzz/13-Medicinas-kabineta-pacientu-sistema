@@ -58,6 +58,7 @@ public class FormDBSystemGUI extends javax.swing.JFrame {
     private final dao.DiagnozeDAO diagnozeDAO = new dao.DiagnozeDAO();
     private List<Recepte> displayedPrescriptions = new java.util.ArrayList<>();
     private String displayedDoctorName = "—";
+    private List<Lietotajs> displayedUsers = new java.util.ArrayList<>();
 
     /**
      * Creates new form FormDBSystemGUI
@@ -65,6 +66,9 @@ public class FormDBSystemGUI extends javax.swing.JFrame {
     public FormDBSystemGUI() {
         initComponents();
         DatabaseManager.init();
+
+        this.setLocationRelativeTo(null);
+
         comboCalendarDoctor.setEnabled(false);
         CancelDialogWin.setModal(true);
         ConfirmDialogWin.setModal(true);
@@ -257,13 +261,13 @@ public class FormDBSystemGUI extends javax.swing.JFrame {
         btnVisitsDoc = new javax.swing.JButton();
         btnPatients2 = new javax.swing.JButton();
         btnExit2 = new javax.swing.JButton();
-        PacientListDialogWin = new javax.swing.JDialog();
-        panelPacientListHeader = new javax.swing.JPanel();
+        UserListDialogWin = new javax.swing.JDialog();
+        panelUserListHeader = new javax.swing.JPanel();
         txtUserListHeading = new javax.swing.JLabel();
-        scrollPacientPreview = new javax.swing.JScrollPane();
+        scrollUserPreview = new javax.swing.JScrollPane();
         tableUserPreview = new javax.swing.JTable();
-        panelPacientListFooter = new javax.swing.JPanel();
-        btnPacientListClose = new javax.swing.JButton();
+        panelUserListFooter = new javax.swing.JPanel();
+        btnUserListClose = new javax.swing.JButton();
         ComboUserList = new javax.swing.JComboBox<>();
         btnDeleteUser = new javax.swing.JButton();
         PacientInfoDialogWin = new javax.swing.JDialog();
@@ -287,15 +291,15 @@ public class FormDBSystemGUI extends javax.swing.JFrame {
         btnInfoClose1 = new javax.swing.JButton();
         BtnAddDiagnoz = new javax.swing.JButton();
         btnAddPrescription = new javax.swing.JButton();
-        UsersListDialogWin = new javax.swing.JDialog();
-        panelPacientListHeader1 = new javax.swing.JPanel();
+        PacientListDialogWin = new javax.swing.JDialog();
+        panelPacientListHeader = new javax.swing.JPanel();
         txtPacientListHeading1 = new javax.swing.JLabel();
-        scrollPacientPreview1 = new javax.swing.JScrollPane();
-        tablePacientPreview1 = new javax.swing.JTable();
-        panelPacientListFooter1 = new javax.swing.JPanel();
+        scrollPacientPreview = new javax.swing.JScrollPane();
+        tablePacientPreview = new javax.swing.JTable();
+        panelPacientListFooter = new javax.swing.JPanel();
         btnPacientListClose1 = new javax.swing.JButton();
-        jComboPacientListPacient1 = new javax.swing.JComboBox<>();
-        btnPacientListShowPacient1 = new javax.swing.JButton();
+        jComboPacientListPacient = new javax.swing.JComboBox<>();
+        btnPacientListShowPacient = new javax.swing.JButton();
         BtnLoginForm = new javax.swing.JButton();
         txtGreeting = new javax.swing.JLabel();
         ShowTablesDB = new javax.swing.JButton();
@@ -1679,6 +1683,11 @@ public class FormDBSystemGUI extends javax.swing.JFrame {
         btnPrescriptionClose.setFocusPainted(false);
         btnPrescriptionClose.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
         btnPrescriptionClose.setPreferredSize(new java.awt.Dimension(120, 30));
+        btnPrescriptionClose.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnPrescriptionCloseActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout panelPrescriptionFooterLayout = new javax.swing.GroupLayout(panelPrescriptionFooter);
         panelPrescriptionFooter.setLayout(panelPrescriptionFooterLayout);
@@ -2134,34 +2143,34 @@ public class FormDBSystemGUI extends javax.swing.JFrame {
                 .addContainerGap(172, Short.MAX_VALUE))
         );
 
-        PacientListDialogWin.setBackground(new java.awt.Color(255, 255, 255));
+        UserListDialogWin.setBackground(new java.awt.Color(255, 255, 255));
 
-        panelPacientListHeader.setBackground(new java.awt.Color(222, 235, 250));
-        panelPacientListHeader.setPreferredSize(new java.awt.Dimension(460, 70));
+        panelUserListHeader.setBackground(new java.awt.Color(222, 235, 250));
+        panelUserListHeader.setPreferredSize(new java.awt.Dimension(460, 70));
 
         txtUserListHeading.setFont(new java.awt.Font("Segoe UI", 1, 22)); // NOI18N
         txtUserListHeading.setForeground(new java.awt.Color(23, 71, 122));
         txtUserListHeading.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         txtUserListHeading.setText("Lietotaji");
 
-        javax.swing.GroupLayout panelPacientListHeaderLayout = new javax.swing.GroupLayout(panelPacientListHeader);
-        panelPacientListHeader.setLayout(panelPacientListHeaderLayout);
-        panelPacientListHeaderLayout.setHorizontalGroup(
-            panelPacientListHeaderLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(panelPacientListHeaderLayout.createSequentialGroup()
+        javax.swing.GroupLayout panelUserListHeaderLayout = new javax.swing.GroupLayout(panelUserListHeader);
+        panelUserListHeader.setLayout(panelUserListHeaderLayout);
+        panelUserListHeaderLayout.setHorizontalGroup(
+            panelUserListHeaderLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(panelUserListHeaderLayout.createSequentialGroup()
                 .addGap(187, 187, 187)
                 .addComponent(txtUserListHeading)
                 .addContainerGap(189, Short.MAX_VALUE))
         );
-        panelPacientListHeaderLayout.setVerticalGroup(
-            panelPacientListHeaderLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(panelPacientListHeaderLayout.createSequentialGroup()
+        panelUserListHeaderLayout.setVerticalGroup(
+            panelUserListHeaderLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(panelUserListHeaderLayout.createSequentialGroup()
                 .addGap(19, 19, 19)
                 .addComponent(txtUserListHeading)
                 .addContainerGap(21, Short.MAX_VALUE))
         );
 
-        scrollPacientPreview.setPreferredSize(new java.awt.Dimension(412, 122));
+        scrollUserPreview.setPreferredSize(new java.awt.Dimension(412, 122));
 
         tableUserPreview.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         tableUserPreview.setForeground(new java.awt.Color(30, 35, 45));
@@ -2186,40 +2195,40 @@ public class FormDBSystemGUI extends javax.swing.JFrame {
         tableUserPreview.setShowVerticalLines(true);
         tableUserPreview.getTableHeader().setResizingAllowed(false);
         tableUserPreview.getTableHeader().setReorderingAllowed(false);
-        scrollPacientPreview.setViewportView(tableUserPreview);
+        scrollUserPreview.setViewportView(tableUserPreview);
 
-        panelPacientListFooter.setBackground(new java.awt.Color(222, 235, 250));
-        panelPacientListFooter.setPreferredSize(new java.awt.Dimension(460, 50));
+        panelUserListFooter.setBackground(new java.awt.Color(222, 235, 250));
+        panelUserListFooter.setPreferredSize(new java.awt.Dimension(460, 50));
 
-        btnPacientListClose.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-        btnPacientListClose.setForeground(new java.awt.Color(20, 80, 140));
-        btnPacientListClose.setText("Aizvērt");
-        btnPacientListClose.setBorderPainted(false);
-        btnPacientListClose.setContentAreaFilled(false);
-        btnPacientListClose.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        btnPacientListClose.setFocusPainted(false);
-        btnPacientListClose.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
-        btnPacientListClose.setPreferredSize(new java.awt.Dimension(120, 30));
-        btnPacientListClose.addActionListener(new java.awt.event.ActionListener() {
+        btnUserListClose.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        btnUserListClose.setForeground(new java.awt.Color(20, 80, 140));
+        btnUserListClose.setText("Aizvērt");
+        btnUserListClose.setBorderPainted(false);
+        btnUserListClose.setContentAreaFilled(false);
+        btnUserListClose.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        btnUserListClose.setFocusPainted(false);
+        btnUserListClose.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
+        btnUserListClose.setPreferredSize(new java.awt.Dimension(120, 30));
+        btnUserListClose.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnPacientListCloseActionPerformed(evt);
+                btnUserListCloseActionPerformed(evt);
             }
         });
 
-        javax.swing.GroupLayout panelPacientListFooterLayout = new javax.swing.GroupLayout(panelPacientListFooter);
-        panelPacientListFooter.setLayout(panelPacientListFooterLayout);
-        panelPacientListFooterLayout.setHorizontalGroup(
-            panelPacientListFooterLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelPacientListFooterLayout.createSequentialGroup()
+        javax.swing.GroupLayout panelUserListFooterLayout = new javax.swing.GroupLayout(panelUserListFooter);
+        panelUserListFooter.setLayout(panelUserListFooterLayout);
+        panelUserListFooterLayout.setHorizontalGroup(
+            panelUserListFooterLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelUserListFooterLayout.createSequentialGroup()
                 .addContainerGap(315, Short.MAX_VALUE)
-                .addComponent(btnPacientListClose, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(btnUserListClose, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(25, 25, 25))
         );
-        panelPacientListFooterLayout.setVerticalGroup(
-            panelPacientListFooterLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelPacientListFooterLayout.createSequentialGroup()
+        panelUserListFooterLayout.setVerticalGroup(
+            panelUserListFooterLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelUserListFooterLayout.createSequentialGroup()
                 .addContainerGap(14, Short.MAX_VALUE)
-                .addComponent(btnPacientListClose, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(btnUserListClose, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
 
@@ -2232,37 +2241,37 @@ public class FormDBSystemGUI extends javax.swing.JFrame {
             }
         });
 
-        javax.swing.GroupLayout PacientListDialogWinLayout = new javax.swing.GroupLayout(PacientListDialogWin.getContentPane());
-        PacientListDialogWin.getContentPane().setLayout(PacientListDialogWinLayout);
-        PacientListDialogWinLayout.setHorizontalGroup(
-            PacientListDialogWinLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(PacientListDialogWinLayout.createSequentialGroup()
-                .addGroup(PacientListDialogWinLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(panelPacientListHeader, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(panelPacientListFooter, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+        javax.swing.GroupLayout UserListDialogWinLayout = new javax.swing.GroupLayout(UserListDialogWin.getContentPane());
+        UserListDialogWin.getContentPane().setLayout(UserListDialogWinLayout);
+        UserListDialogWinLayout.setHorizontalGroup(
+            UserListDialogWinLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(UserListDialogWinLayout.createSequentialGroup()
+                .addGroup(UserListDialogWinLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(panelUserListHeader, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(panelUserListFooter, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(0, 0, Short.MAX_VALUE))
-            .addGroup(PacientListDialogWinLayout.createSequentialGroup()
+            .addGroup(UserListDialogWinLayout.createSequentialGroup()
                 .addGap(24, 24, 24)
-                .addGroup(PacientListDialogWinLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(scrollPacientPreview, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGroup(PacientListDialogWinLayout.createSequentialGroup()
+                .addGroup(UserListDialogWinLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(scrollUserPreview, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(UserListDialogWinLayout.createSequentialGroup()
                         .addComponent(ComboUserList, javax.swing.GroupLayout.PREFERRED_SIZE, 156, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(btnDeleteUser, javax.swing.GroupLayout.PREFERRED_SIZE, 171, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
-        PacientListDialogWinLayout.setVerticalGroup(
-            PacientListDialogWinLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(PacientListDialogWinLayout.createSequentialGroup()
-                .addComponent(panelPacientListHeader, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+        UserListDialogWinLayout.setVerticalGroup(
+            UserListDialogWinLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(UserListDialogWinLayout.createSequentialGroup()
+                .addComponent(panelUserListHeader, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(49, 49, 49)
-                .addComponent(scrollPacientPreview, javax.swing.GroupLayout.PREFERRED_SIZE, 321, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(scrollUserPreview, javax.swing.GroupLayout.PREFERRED_SIZE, 321, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 19, Short.MAX_VALUE)
-                .addGroup(PacientListDialogWinLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                .addGroup(UserListDialogWinLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(ComboUserList, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnDeleteUser, javax.swing.GroupLayout.DEFAULT_SIZE, 28, Short.MAX_VALUE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(panelPacientListFooter, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addComponent(panelUserListFooter, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
 
         PacientInfoDialogWin.setTitle("Receptes informācija");
@@ -2435,38 +2444,38 @@ public class FormDBSystemGUI extends javax.swing.JFrame {
                 .addContainerGap(35, Short.MAX_VALUE))
         );
 
-        UsersListDialogWin.setBackground(new java.awt.Color(255, 255, 255));
+        PacientListDialogWin.setBackground(new java.awt.Color(255, 255, 255));
 
-        panelPacientListHeader1.setBackground(new java.awt.Color(222, 235, 250));
-        panelPacientListHeader1.setPreferredSize(new java.awt.Dimension(460, 70));
+        panelPacientListHeader.setBackground(new java.awt.Color(222, 235, 250));
+        panelPacientListHeader.setPreferredSize(new java.awt.Dimension(460, 70));
 
         txtPacientListHeading1.setFont(new java.awt.Font("Segoe UI", 1, 22)); // NOI18N
         txtPacientListHeading1.setForeground(new java.awt.Color(23, 71, 122));
         txtPacientListHeading1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         txtPacientListHeading1.setText("Mani pacienti");
 
-        javax.swing.GroupLayout panelPacientListHeader1Layout = new javax.swing.GroupLayout(panelPacientListHeader1);
-        panelPacientListHeader1.setLayout(panelPacientListHeader1Layout);
-        panelPacientListHeader1Layout.setHorizontalGroup(
-            panelPacientListHeader1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(panelPacientListHeader1Layout.createSequentialGroup()
+        javax.swing.GroupLayout panelPacientListHeaderLayout = new javax.swing.GroupLayout(panelPacientListHeader);
+        panelPacientListHeader.setLayout(panelPacientListHeaderLayout);
+        panelPacientListHeaderLayout.setHorizontalGroup(
+            panelPacientListHeaderLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(panelPacientListHeaderLayout.createSequentialGroup()
                 .addGap(141, 141, 141)
                 .addComponent(txtPacientListHeading1)
                 .addContainerGap(178, Short.MAX_VALUE))
         );
-        panelPacientListHeader1Layout.setVerticalGroup(
-            panelPacientListHeader1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(panelPacientListHeader1Layout.createSequentialGroup()
+        panelPacientListHeaderLayout.setVerticalGroup(
+            panelPacientListHeaderLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(panelPacientListHeaderLayout.createSequentialGroup()
                 .addGap(19, 19, 19)
                 .addComponent(txtPacientListHeading1)
                 .addContainerGap(21, Short.MAX_VALUE))
         );
 
-        scrollPacientPreview1.setPreferredSize(new java.awt.Dimension(412, 122));
+        scrollPacientPreview.setPreferredSize(new java.awt.Dimension(412, 122));
 
-        tablePacientPreview1.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-        tablePacientPreview1.setForeground(new java.awt.Color(30, 35, 45));
-        tablePacientPreview1.setModel(new javax.swing.table.DefaultTableModel(
+        tablePacientPreview.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        tablePacientPreview.setForeground(new java.awt.Color(30, 35, 45));
+        tablePacientPreview.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null},
                 {null, null, null},
@@ -2477,20 +2486,20 @@ public class FormDBSystemGUI extends javax.swing.JFrame {
                 "Vārds", "Uzvārds", "Perosonas kods"
             }
         ));
-        tablePacientPreview1.setToolTipText("");
-        tablePacientPreview1.setFillsViewportHeight(true);
-        tablePacientPreview1.setRowHeight(34);
-        tablePacientPreview1.setSelectionBackground(new java.awt.Color(220, 235, 250));
-        tablePacientPreview1.setSelectionForeground(new java.awt.Color(23, 71, 122));
-        tablePacientPreview1.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
-        tablePacientPreview1.setShowHorizontalLines(true);
-        tablePacientPreview1.setShowVerticalLines(true);
-        tablePacientPreview1.getTableHeader().setResizingAllowed(false);
-        tablePacientPreview1.getTableHeader().setReorderingAllowed(false);
-        scrollPacientPreview1.setViewportView(tablePacientPreview1);
+        tablePacientPreview.setToolTipText("");
+        tablePacientPreview.setFillsViewportHeight(true);
+        tablePacientPreview.setRowHeight(34);
+        tablePacientPreview.setSelectionBackground(new java.awt.Color(220, 235, 250));
+        tablePacientPreview.setSelectionForeground(new java.awt.Color(23, 71, 122));
+        tablePacientPreview.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
+        tablePacientPreview.setShowHorizontalLines(true);
+        tablePacientPreview.setShowVerticalLines(true);
+        tablePacientPreview.getTableHeader().setResizingAllowed(false);
+        tablePacientPreview.getTableHeader().setReorderingAllowed(false);
+        scrollPacientPreview.setViewportView(tablePacientPreview);
 
-        panelPacientListFooter1.setBackground(new java.awt.Color(222, 235, 250));
-        panelPacientListFooter1.setPreferredSize(new java.awt.Dimension(460, 50));
+        panelPacientListFooter.setBackground(new java.awt.Color(222, 235, 250));
+        panelPacientListFooter.setPreferredSize(new java.awt.Dimension(460, 50));
 
         btnPacientListClose1.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         btnPacientListClose1.setForeground(new java.awt.Color(20, 80, 140));
@@ -2507,63 +2516,63 @@ public class FormDBSystemGUI extends javax.swing.JFrame {
             }
         });
 
-        javax.swing.GroupLayout panelPacientListFooter1Layout = new javax.swing.GroupLayout(panelPacientListFooter1);
-        panelPacientListFooter1.setLayout(panelPacientListFooter1Layout);
-        panelPacientListFooter1Layout.setHorizontalGroup(
-            panelPacientListFooter1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelPacientListFooter1Layout.createSequentialGroup()
+        javax.swing.GroupLayout panelPacientListFooterLayout = new javax.swing.GroupLayout(panelPacientListFooter);
+        panelPacientListFooter.setLayout(panelPacientListFooterLayout);
+        panelPacientListFooterLayout.setHorizontalGroup(
+            panelPacientListFooterLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelPacientListFooterLayout.createSequentialGroup()
                 .addContainerGap(315, Short.MAX_VALUE)
                 .addComponent(btnPacientListClose1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(25, 25, 25))
         );
-        panelPacientListFooter1Layout.setVerticalGroup(
-            panelPacientListFooter1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelPacientListFooter1Layout.createSequentialGroup()
+        panelPacientListFooterLayout.setVerticalGroup(
+            panelPacientListFooterLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelPacientListFooterLayout.createSequentialGroup()
                 .addContainerGap(14, Short.MAX_VALUE)
                 .addComponent(btnPacientListClose1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
 
-        jComboPacientListPacient1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        jComboPacientListPacient.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
 
-        btnPacientListShowPacient1.setText("Apskatīt pacientu");
-        btnPacientListShowPacient1.addActionListener(new java.awt.event.ActionListener() {
+        btnPacientListShowPacient.setText("Apskatīt pacientu");
+        btnPacientListShowPacient.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnPacientListShowPacient1ActionPerformed(evt);
+                btnPacientListShowPacientActionPerformed(evt);
             }
         });
 
-        javax.swing.GroupLayout UsersListDialogWinLayout = new javax.swing.GroupLayout(UsersListDialogWin.getContentPane());
-        UsersListDialogWin.getContentPane().setLayout(UsersListDialogWinLayout);
-        UsersListDialogWinLayout.setHorizontalGroup(
-            UsersListDialogWinLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(UsersListDialogWinLayout.createSequentialGroup()
-                .addGroup(UsersListDialogWinLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(panelPacientListHeader1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(panelPacientListFooter1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+        javax.swing.GroupLayout PacientListDialogWinLayout = new javax.swing.GroupLayout(PacientListDialogWin.getContentPane());
+        PacientListDialogWin.getContentPane().setLayout(PacientListDialogWinLayout);
+        PacientListDialogWinLayout.setHorizontalGroup(
+            PacientListDialogWinLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(PacientListDialogWinLayout.createSequentialGroup()
+                .addGroup(PacientListDialogWinLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(panelPacientListHeader, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(panelPacientListFooter, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(0, 0, Short.MAX_VALUE))
-            .addGroup(UsersListDialogWinLayout.createSequentialGroup()
+            .addGroup(PacientListDialogWinLayout.createSequentialGroup()
                 .addGap(24, 24, 24)
-                .addGroup(UsersListDialogWinLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(scrollPacientPreview1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGroup(UsersListDialogWinLayout.createSequentialGroup()
-                        .addComponent(jComboPacientListPacient1, javax.swing.GroupLayout.PREFERRED_SIZE, 156, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(PacientListDialogWinLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(scrollPacientPreview, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(PacientListDialogWinLayout.createSequentialGroup()
+                        .addComponent(jComboPacientListPacient, javax.swing.GroupLayout.PREFERRED_SIZE, 156, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(btnPacientListShowPacient1, javax.swing.GroupLayout.PREFERRED_SIZE, 171, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(btnPacientListShowPacient, javax.swing.GroupLayout.PREFERRED_SIZE, 171, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
-        UsersListDialogWinLayout.setVerticalGroup(
-            UsersListDialogWinLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(UsersListDialogWinLayout.createSequentialGroup()
-                .addComponent(panelPacientListHeader1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+        PacientListDialogWinLayout.setVerticalGroup(
+            PacientListDialogWinLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(PacientListDialogWinLayout.createSequentialGroup()
+                .addComponent(panelPacientListHeader, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(49, 49, 49)
-                .addComponent(scrollPacientPreview1, javax.swing.GroupLayout.PREFERRED_SIZE, 321, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(scrollPacientPreview, javax.swing.GroupLayout.PREFERRED_SIZE, 321, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 19, Short.MAX_VALUE)
-                .addGroup(UsersListDialogWinLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jComboPacientListPacient1, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnPacientListShowPacient1, javax.swing.GroupLayout.DEFAULT_SIZE, 28, Short.MAX_VALUE))
+                .addGroup(PacientListDialogWinLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jComboPacientListPacient, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnPacientListShowPacient, javax.swing.GroupLayout.DEFAULT_SIZE, 28, Short.MAX_VALUE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(panelPacientListFooter1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addComponent(panelPacientListFooter, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -2608,31 +2617,31 @@ public class FormDBSystemGUI extends javax.swing.JFrame {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(69, 69, 69)
-                        .addComponent(BtnLoginForm, javax.swing.GroupLayout.PREFERRED_SIZE, 270, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(164, 164, 164)
-                        .addComponent(txtGreeting)))
-                .addContainerGap(111, Short.MAX_VALUE))
-            .addGroup(layout.createSequentialGroup()
                 .addGap(29, 29, 29)
                 .addComponent(FillDB)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 71, Short.MAX_VALUE)
                 .addComponent(ClearDB)
                 .addGap(69, 69, 69)
                 .addComponent(ShowTablesDB)
                 .addGap(18, 18, 18))
+            .addGroup(layout.createSequentialGroup()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(185, 185, 185)
+                        .addComponent(txtGreeting))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(89, 89, 89)
+                        .addComponent(BtnLoginForm, javax.swing.GroupLayout.PREFERRED_SIZE, 270, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(23, 23, 23)
+                .addGap(49, 49, 49)
                 .addComponent(txtGreeting)
-                .addGap(87, 87, 87)
+                .addGap(97, 97, 97)
                 .addComponent(BtnLoginForm, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 172, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 136, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(ShowTablesDB)
                     .addComponent(FillDB)
@@ -2723,10 +2732,10 @@ public class FormDBSystemGUI extends javax.swing.JFrame {
     }//GEN-LAST:event_btnExitActionPerformed
 
     private void BtnLoginFormActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnLoginFormActionPerformed
-        LoginDialogWin.setVisible(true);
-        this.setVisible(false);
-        LoginDialogWin.setLocationRelativeTo(this);
         LoginDialogWin.pack();
+        LoginDialogWin.setLocationRelativeTo(null);
+        this.setVisible(false);
+        LoginDialogWin.setVisible(true);
     }//GEN-LAST:event_BtnLoginFormActionPerformed
 
     private void btnLoginActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLoginActionPerformed
@@ -2806,7 +2815,7 @@ public class FormDBSystemGUI extends javax.swing.JFrame {
     }//GEN-LAST:event_AdminMainDialogWinWindowClosing
 
     private void btnAssignCancelActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAssignCancelActionPerformed
-
+        AdminDialogWin.setVisible(false);
     }//GEN-LAST:event_btnAssignCancelActionPerformed
 
     private void btnReceptActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnReceptActionPerformed
@@ -3017,9 +3026,9 @@ public class FormDBSystemGUI extends javax.swing.JFrame {
             return;
         }
 
-        PacientListDialogWin.pack();
-        PacientListDialogWin.setLocationRelativeTo(DoctorMainDialogWin);
-        PacientListDialogWin.setVisible(true);
+        UserListDialogWin.pack();
+        UserListDialogWin.setLocationRelativeTo(DoctorMainDialogWin);
+        UserListDialogWin.setVisible(true);
     }//GEN-LAST:event_btnPatients2ActionPerformed
 
     private void btnExit2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnExit2ActionPerformed
@@ -3190,67 +3199,113 @@ public class FormDBSystemGUI extends javax.swing.JFrame {
 
     private void btnInfoClose1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnInfoClose1ActionPerformed
         PacientInfoDialogWin.setVisible(false);
-        PacientListDialogWin.setVisible(true);
+        UserListDialogWin.setVisible(true);
     }//GEN-LAST:event_btnInfoClose1ActionPerformed
 
-    private void btnPacientListCloseActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPacientListCloseActionPerformed
-        PacientListDialogWin.setVisible(false);
+    private void btnUserListCloseActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnUserListCloseActionPerformed
+        UserListDialogWin.setVisible(false);
         DoctorMainDialogWin.setVisible(true);
-    }//GEN-LAST:event_btnPacientListCloseActionPerformed
+    }//GEN-LAST:event_btnUserListCloseActionPerformed
 
     private void btnDeleteUserActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDeleteUserActionPerformed
+
         int selectedIndex = ComboUserList.getSelectedIndex();
 
-        if (selectedIndex < 0) {
+        if (selectedIndex == -1) {
+
             JOptionPane.showMessageDialog(
-                    PacientListDialogWin,
-                    "Lūdzu, izvēlieties pacientu!"
+                    UserListDialogWin,
+                    "Lūdzu, izvēlieties lietotāju!"
             );
+
             return;
         }
 
-        java.util.List<model.Lietotajs> patients
-                = userDAO.getPatientsByDoctorId(loggedInUser.getId());
+        Lietotajs selectedUser = displayedUsers.get(selectedIndex);
 
-        if (selectedIndex >= patients.size()) {
+        if ("Administrators".equals(selectedUser.getLoma())) {
+
             JOptionPane.showMessageDialog(
-                    PacientListDialogWin,
-                    "Neizdevās atrast izvēlēto pacientu!"
+                    UserListDialogWin,
+                    "Administratora kontu nevar dzēst!"
             );
+
             return;
         }
 
-        model.Lietotajs patient = patients.get(selectedIndex);
-        selectedPatient = patient;
-
-        java.util.List<model.Diagnoze> diagnozes
-                = diagnozeDAO.getDiagnozesByPacientsId(patient.getId());
-
-        if (diagnozes.isEmpty()) {
-            txtPacientInfoDiagnozValue.setText("Nav diagnozes");
-            txtPacientInfoInsrtDateValue.setText("-");
-        } else {
-            model.Diagnoze diagnoze = diagnozes.get(0);
-
-            txtPacientInfoDiagnozValue.setText(diagnoze.getApraksts());
-
-            txtPacientInfoInsrtDateValue.setText(
-                    new java.text.SimpleDateFormat("dd.MM.yyyy")
-                            .format(diagnoze.getDatums())
-            );
-        }
-
-        txtPacientInfoNameValue.setText(patient.getVards());
-        txtPacientInfoSurnameValue.setText(patient.getUzvards());
-        txtPacientInfoPersncodeValue.setText(
-                patient.getPersonasKodsEnc()
+        int confirmation = JOptionPane.showConfirmDialog(
+                UserListDialogWin,
+                "Vai tiešām vēlaties dzēst lietotāju "
+                + selectedUser.getVards() + " "
+                + selectedUser.getUzvards() + "?",
+                "Apstiprināt dzēšanu",
+                JOptionPane.YES_NO_OPTION,
+                JOptionPane.WARNING_MESSAGE
         );
 
-        PacientListDialogWin.setVisible(false);
+        if (confirmation != JOptionPane.YES_OPTION) {
+            return;
+        }
 
-        PacientInfoDialogWin.pack();
-        PacientInfoDialogWin.setLocationRelativeTo(DoctorMainDialogWin);
-        PacientInfoDialogWin.setVisible(true);
+        boolean success = userDAO.deleteUserById(selectedUser.getId());
+
+        if (success) {
+
+            JOptionPane.showMessageDialog(
+                    UserListDialogWin,
+                    "Lietotājs veiksmīgi izdzēsts!"
+            );
+
+            DefaultTableModel model = new DefaultTableModel(
+                    new Object[][]{},
+                    new String[]{
+                        "Vārds",
+                        "Uzvārds",
+                        "Personas kods",
+                        "Loma"
+                    }
+            ) {
+                @Override
+                public boolean isCellEditable(int row, int column) {
+                    return false;
+                }
+            };
+
+            tableUserPreview.setModel(model);
+
+            ComboUserList.removeAllItems();
+
+            displayedUsers = userDAO.getAllUsers();
+
+            for (Lietotajs user : displayedUsers) {
+
+                model.addRow(new Object[]{
+                    user.getVards(),
+                    user.getUzvards(),
+                    user.getPersonasKodsEnc(),
+                    user.getLoma()
+                });
+
+                ComboUserList.addItem(
+                        user.getVards() + " "
+                        + user.getUzvards() + " ("
+                        + user.getLoma() + ")"
+                );
+            }
+
+            UserListDialogWin.pack();
+            UserListDialogWin.setLocationRelativeTo(AdminMainDialogWin);
+            UserListDialogWin.setVisible(true);
+
+        } else {
+
+            JOptionPane.showMessageDialog(
+                    UserListDialogWin,
+                    "Neizdevās izdzēst lietotāju!",
+                    "Kļūda",
+                    JOptionPane.ERROR_MESSAGE
+            );
+        }
     }//GEN-LAST:event_btnDeleteUserActionPerformed
 
     private void btnAssignConfirmActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAssignConfirmActionPerformed
@@ -3419,7 +3474,7 @@ public class FormDBSystemGUI extends javax.swing.JFrame {
             fieldDrugDoseValue.setText("");
             fieldInfoUsage.setText("");
 
-            PrescriptionAddDialogWin.dispose();
+            PrescriptionAddDialogWin.setVisible(false);
 
         } else {
 
@@ -3433,7 +3488,7 @@ public class FormDBSystemGUI extends javax.swing.JFrame {
     private void btnInfoClose2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnInfoClose2ActionPerformed
         // TODO add your handling code here:
 
-        PrescriptionAddDialogWin.dispose();
+        PrescriptionAddDialogWin.setVisible(false);
 
     }//GEN-LAST:event_btnInfoClose2ActionPerformed
 
@@ -3511,20 +3566,66 @@ public class FormDBSystemGUI extends javax.swing.JFrame {
 
     private void btnInfoCloseActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnInfoCloseActionPerformed
         // TODO add your handling code here:
-        PrescriptionInfoDialogWin.dispose();
+        PrescriptionInfoDialogWin.setVisible(false);
     }//GEN-LAST:event_btnInfoCloseActionPerformed
 
     private void btnDelUserActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDelUserActionPerformed
-        // TODO add your handling code here:
+
+        DefaultTableModel model = new DefaultTableModel(
+                new Object[][]{},
+                new String[]{
+                    "Vārds",
+                    "Uzvārds",
+                    "Personas kods",
+                    "Loma"
+                }
+        ) {
+            @Override
+            public boolean isCellEditable(int row, int column) {
+                return false;
+            }
+        };
+
+        tableUserPreview.setModel(model);
+
+        ComboUserList.removeAllItems();
+
+        displayedUsers = userDAO.getAllUsers();
+
+        for (Lietotajs user : displayedUsers) {
+
+            model.addRow(new Object[]{
+                user.getVards(),
+                user.getUzvards(),
+                user.getPersonasKodsEnc(),
+                user.getLoma()
+            });
+
+            ComboUserList.addItem(
+                    user.getVards() + " "
+                    + user.getUzvards() + " ("
+                    + user.getLoma() + ")"
+            );
+        }
+
+        UserListDialogWin.pack();
+        UserListDialogWin.setLocationRelativeTo(AdminMainDialogWin);
+        UserListDialogWin.setVisible(true);
+
     }//GEN-LAST:event_btnDelUserActionPerformed
 
     private void btnPacientListClose1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPacientListClose1ActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_btnPacientListClose1ActionPerformed
 
-    private void btnPacientListShowPacient1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPacientListShowPacient1ActionPerformed
+    private void btnPacientListShowPacientActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPacientListShowPacientActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_btnPacientListShowPacient1ActionPerformed
+    }//GEN-LAST:event_btnPacientListShowPacientActionPerformed
+
+    private void btnPrescriptionCloseActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPrescriptionCloseActionPerformed
+        // TODO add your handling code here:
+        PrescriptionDialogWin.setVisible(false);
+    }//GEN-LAST:event_btnPrescriptionCloseActionPerformed
 
     private void openCalendar() {
 
@@ -3934,7 +4035,7 @@ public class FormDBSystemGUI extends javax.swing.JFrame {
     private javax.swing.JDialog PrescriptionInfoDialogWin;
     private javax.swing.JDialog RegisterDialogWin;
     private javax.swing.JButton ShowTablesDB;
-    private javax.swing.JDialog UsersListDialogWin;
+    private javax.swing.JDialog UserListDialogWin;
     private javax.swing.JButton btnAddDrug;
     private javax.swing.JButton btnAddPrescription;
     private javax.swing.JButton btnAssignCancel;
@@ -3956,9 +4057,8 @@ public class FormDBSystemGUI extends javax.swing.JFrame {
     private javax.swing.JButton btnInfoClose1;
     private javax.swing.JButton btnInfoClose2;
     private javax.swing.JButton btnLogin;
-    private javax.swing.JButton btnPacientListClose;
     private javax.swing.JButton btnPacientListClose1;
-    private javax.swing.JButton btnPacientListShowPacient1;
+    private javax.swing.JButton btnPacientListShowPacient;
     private javax.swing.JButton btnPatients1;
     private javax.swing.JButton btnPatients2;
     private javax.swing.JButton btnPrescriptionClose;
@@ -3968,6 +4068,7 @@ public class FormDBSystemGUI extends javax.swing.JFrame {
     private javax.swing.JButton btnRegisterBack;
     private javax.swing.JButton btnRelate;
     private javax.swing.JButton btnShowPrescriptionList;
+    private javax.swing.JButton btnUserListClose;
     private javax.swing.JButton btnVisits1;
     private javax.swing.JButton btnVisitsDoc;
     private javax.swing.JButton cancelVisitButton;
@@ -3987,7 +4088,7 @@ public class FormDBSystemGUI extends javax.swing.JFrame {
     private javax.swing.JTextField fieldRegisterPassword;
     private javax.swing.JTextField fieldRegisterPersonalCode;
     private javax.swing.JTextField fieldRegisterSurname;
-    private javax.swing.JComboBox<String> jComboPacientListPacient1;
+    private javax.swing.JComboBox<String> jComboPacientListPacient;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JPanel jPanel1;
@@ -4025,16 +4126,16 @@ public class FormDBSystemGUI extends javax.swing.JFrame {
     private javax.swing.JPanel panelCancelInfo1;
     private javax.swing.JPanel panelConfirmHeader;
     private javax.swing.JPanel panelPacientListFooter;
-    private javax.swing.JPanel panelPacientListFooter1;
     private javax.swing.JPanel panelPacientListHeader;
-    private javax.swing.JPanel panelPacientListHeader1;
     private javax.swing.JPanel panelPrescriptionFooter;
     private javax.swing.JPanel panelPrescriptionHeader;
+    private javax.swing.JPanel panelUserListFooter;
+    private javax.swing.JPanel panelUserListHeader;
     private javax.swing.JScrollPane scrollPacientPreview;
-    private javax.swing.JScrollPane scrollPacientPreview1;
     private javax.swing.JScrollPane scrollPrescriptions;
+    private javax.swing.JScrollPane scrollUserPreview;
     private javax.swing.JScrollPane scrollVisitHistory;
-    private javax.swing.JTable tablePacientPreview1;
+    private javax.swing.JTable tablePacientPreview;
     private javax.swing.JTable tablePrescriptions;
     private javax.swing.JTable tableUserPreview;
     private javax.swing.JTable tableVisitHistory;

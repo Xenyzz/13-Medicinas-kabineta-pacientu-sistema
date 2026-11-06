@@ -167,94 +167,265 @@ public class LietotajsDAO {
         return null;
     }
 
-    public boolean deleteUser(String username) {
-        return false;
+    public boolean deleteUserById(int userId) {
+
+        String checkSql
+                = "SELECT loma FROM lietotajs "
+                + "WHERE lietotaja_id = ?";
+
+        try (Connection conn = DatabaseManager.getConnection()) {
+
+            conn.setAutoCommit(false);
+
+            try {
+
+      
+                try (PreparedStatement ps = conn.prepareStatement(checkSql)) {
+
+                    ps.setInt(1, userId);
+
+                    try (ResultSet rs = ps.executeQuery()) {
+
+                        if (!rs.next()) {
+                            conn.rollback();
+                            return false;
+                        }
+
+                        if ("Administrators".equals(rs.getString("loma"))) {
+                            conn.rollback();
+                            return false;
+                        }
+                    }
+                }
+
+                String visitsSql
+                        = "DELETE FROM vizites "
+                        + "WHERE arsta_id = ? OR pacienta_id = ?";
+
+                try (PreparedStatement ps = conn.prepareStatement(visitsSql)) {
+                    ps.setInt(1, userId);
+                    ps.setInt(2, userId);
+                    ps.executeUpdate();
+                }
+
+
+                String linksSql
+                        = "DELETE FROM arsta_pacienta_saites "
+                        + "WHERE arsta_id = ? OR pacienta_id = ?";
+
+                try (PreparedStatement ps = conn.prepareStatement(linksSql)) {
+                    ps.setInt(1, userId);
+                    ps.setInt(2, userId);
+                    ps.executeUpdate();
+                }
+
+                String prescriptionsSql
+                        = "DELETE FROM receptes WHERE pacienta_id = ?";
+
+                try (PreparedStatement ps = conn.prepareStatement(prescriptionsSql)) {
+                    ps.setInt(1, userId);
+                    ps.executeUpdate();
+                }
+
+                String diagnosesSql
+                        = "DELETE FROM diagnozes WHERE pacienta_id = ?";
+
+                try (PreparedStatement ps = conn.prepareStatement(diagnosesSql)) {
+                    ps.setInt(1, userId);
+                    ps.executeUpdate();
+                }
+
+                String userSql
+                        = "DELETE FROM lietotajs WHERE lietotaja_id = ?";
+
+                try (PreparedStatement ps = conn.prepareStatement(userSql)) {
+                    ps.setInt(1, userId);
+
+                    if (ps.executeUpdate() != 1) {
+                        conn.rollback();
+                        return false;
+                    }
+                }
+
+                conn.commit();
+                return true;
+
+            } catch (SQLException e) {
+
+                conn.rollback();
+                e.printStackTrace();
+                return false;
+
+            } finally {
+                conn.setAutoCommit(true);
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return false;
+        }
     }
 
     public boolean assignDoctorToPatient(int pacientsId, int arstsId) {
 
-    String patientSql
-            = "SELECT lietotaja_id FROM lietotajs "
-            + "WHERE lietotaja_id = ? AND loma = 'Pacients'";
+        String patientSql
+                = "SELECT lietotaja_id FROM lietotajs "
+                + "WHERE lietotaja_id = ? AND loma = 'Pacients'";
 
-    String doctorSql
-            = "SELECT lietotaja_id FROM lietotajs "
-            + "WHERE lietotaja_id = ? AND loma IN ('Arsts', 'Ārsts')";
+        String doctorSql
+                = "SELECT lietotaja_id FROM lietotajs "
+                + "WHERE lietotaja_id = ? AND loma IN ('Arsts', 'Ārsts')";
 
-    String checkSql
-            = "SELECT arsta_id FROM arsta_pacienta_saites "
-            + "WHERE pacienta_id = ?";
+        String checkSql
+                = "SELECT arsta_id FROM arsta_pacienta_saites "
+                + "WHERE pacienta_id = ?";
 
-    String insertSql
-            = "INSERT INTO arsta_pacienta_saites "
-            + "(arsta_id, pacienta_id) VALUES (?, ?)";
+        String insertSql
+                = "INSERT INTO arsta_pacienta_saites "
+                + "(arsta_id, pacienta_id) VALUES (?, ?)";
 
-    try (Connection conn = DatabaseManager.getConnection()) {
+        try (Connection conn = DatabaseManager.getConnection()) {
 
-        // 1. Pārbaude, vai pacients eksistē
-        try (PreparedStatement ps = conn.prepareStatement(patientSql)) {
-            ps.setInt(1, pacientsId);
+            // 1. Pārbaude, vai pacients eksistē
+            try (PreparedStatement ps = conn.prepareStatement(patientSql)) {
+                ps.setInt(1, pacientsId);
 
-            try (ResultSet rs = ps.executeQuery()) {
-                if (!rs.next()) {
-                    return false;
+                try (ResultSet rs = ps.executeQuery()) {
+                    if (!rs.next()) {
+                        return false;
+                    }
                 }
             }
-        }
 
-        // 2. Pārbaude, vai ārsts pastāv
-        try (PreparedStatement ps = conn.prepareStatement(doctorSql)) {
-            ps.setInt(1, arstsId);
+            // 2. Pārbaude, vai ārsts pastāv
+            try (PreparedStatement ps = conn.prepareStatement(doctorSql)) {
+                ps.setInt(1, arstsId);
 
-            try (ResultSet rs = ps.executeQuery()) {
-                if (!rs.next()) {
-                    return false;
+                try (ResultSet rs = ps.executeQuery()) {
+                    if (!rs.next()) {
+                        return false;
+                    }
                 }
             }
-        }
 
-        // 3. Pārbaude, vai pacientam ir nozīmēts ārsts
-        try (PreparedStatement ps = conn.prepareStatement(checkSql)) {
-            ps.setInt(1, pacientsId);
+            // 3. Pārbaude, vai pacientam ir nozīmēts ārsts
+            try (PreparedStatement ps = conn.prepareStatement(checkSql)) {
+                ps.setInt(1, pacientsId);
 
-            try (ResultSet rs = ps.executeQuery()) {
-                if (rs.next()) {
-                    // Pacients jau ir savienots ar ārstu.
-                    return false;
+                try (ResultSet rs = ps.executeQuery()) {
+                    if (rs.next()) {
+                        // Pacients jau ir savienots ar ārstu.
+                        return false;
+                    }
                 }
             }
+
+            // 4. Jaunā savienojuma saglabāšana
+            try (PreparedStatement ps = conn.prepareStatement(insertSql)) {
+                ps.setInt(1, arstsId);
+                ps.setInt(2, pacientsId);
+
+                return ps.executeUpdate() == 1;
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return false;
         }
-
-        // 4. Jaunā savienojuma saglabāšana
-        try (PreparedStatement ps = conn.prepareStatement(insertSql)) {
-            ps.setInt(1, arstsId);
-            ps.setInt(2, pacientsId);
-
-            return ps.executeUpdate() == 1;
-        }
-
-    } catch (SQLException e) {
-        e.printStackTrace();
-        return false;
     }
-}
-    
-  public java.util.List<Lietotajs> findUsersByRole(String role) {
-    java.util.List<Lietotajs> users = new java.util.ArrayList<>();
 
-    String sql = "SELECT lietotaja_id, vards, uzvards, "
-            + "personas_kods_enc, loma "
-            + "FROM lietotajs WHERE loma = ? "
-            + "ORDER BY uzvards, vards";
+    public java.util.List<Lietotajs> findUsersByRole(String role) {
+        java.util.List<Lietotajs> users = new java.util.ArrayList<>();
 
-    try (Connection conn = DatabaseManager.getConnection();
-         PreparedStatement ps = conn.prepareStatement(sql)) {
+        String sql = "SELECT lietotaja_id, vards, uzvards, "
+                + "personas_kods_enc, loma "
+                + "FROM lietotajs WHERE loma = ? "
+                + "ORDER BY uzvards, vards";
 
-        ps.setString(1, role);
+        try (Connection conn = DatabaseManager.getConnection(); PreparedStatement ps = conn.prepareStatement(sql)) {
 
-        try (ResultSet rs = ps.executeQuery()) {
+            ps.setString(1, role);
+
+            try (ResultSet rs = ps.executeQuery()) {
+                while (rs.next()) {
+                    Lietotajs user = new Lietotajs();
+                    user.setId(rs.getInt("lietotaja_id"));
+                    user.setVards(rs.getString("vards"));
+                    user.setUzvards(rs.getString("uzvards"));
+                    user.setPersonasKodsEnc(
+                            rs.getString("personas_kods_enc"));
+                    user.setLoma(rs.getString("loma"));
+
+                    users.add(user);
+                }
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return users;
+    }
+
+    public java.util.List<Lietotajs> getPatientsByDoctorId(int doctorId) {
+        java.util.List<Lietotajs> patients = new java.util.ArrayList<>();
+
+        String sql = "SELECT l.lietotaja_id, l.vards, l.uzvards, "
+                + "l.personas_kods_enc, l.loma "
+                + "FROM lietotajs l "
+                + "JOIN arsta_pacienta_saites a "
+                + "ON l.lietotaja_id = a.pacienta_id "
+                + "WHERE a.arsta_id = ? "
+                + "AND l.loma = 'Pacients' "
+                + "ORDER BY l.uzvards, l.vards";
+
+        try (java.sql.Connection conn = db.DatabaseManager.getConnection(); java.sql.PreparedStatement ps = conn.prepareStatement(sql)) {
+
+            try (java.sql.Statement st = conn.createStatement(); java.sql.ResultSet rs = st.executeQuery(
+                    "SELECT COUNT(*) FROM arsta_pacienta_saites")) {
+                if (rs.next()) {
+                    System.out.println(
+                            "Saistibu skaits: " + rs.getInt(1));
+                }
+            }
+
+            ps.setInt(1, doctorId);
+
+            try (java.sql.ResultSet rs = ps.executeQuery()) {
+                while (rs.next()) {
+                    Lietotajs patient = new Lietotajs();
+
+                    patient.setId(rs.getInt("lietotaja_id"));
+                    patient.setVards(rs.getString("vards"));
+                    patient.setUzvards(rs.getString("uzvards"));
+                    patient.setPersonasKodsEnc(
+                            rs.getString("personas_kods_enc"));
+                    patient.setLoma(rs.getString("loma"));
+
+                    patients.add(patient);
+                }
+            }
+        } catch (java.sql.SQLException e) {
+            e.printStackTrace();
+        }
+        return patients;
+    }
+
+    public java.util.List<Lietotajs> getAllUsers() {
+
+        java.util.List<Lietotajs> users = new java.util.ArrayList<>();
+
+        String sql = "SELECT lietotaja_id, vards, uzvards, "
+                + "personas_kods_enc, loma "
+                + "FROM lietotajs "
+                + "ORDER BY uzvards, vards";
+
+        try (Connection conn = DatabaseManager.getConnection(); PreparedStatement ps = conn.prepareStatement(sql); ResultSet rs = ps.executeQuery()) {
+
             while (rs.next()) {
+
                 Lietotajs user = new Lietotajs();
+
                 user.setId(rs.getInt("lietotaja_id"));
                 user.setVards(rs.getString("vards"));
                 user.setUzvards(rs.getString("uzvards"));
@@ -264,62 +435,11 @@ public class LietotajsDAO {
 
                 users.add(user);
             }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
         }
 
-    } catch (SQLException e) {
-        e.printStackTrace();
+        return users;
     }
-
-    return users;
-}
-
-
-public java.util.List<Lietotajs> getPatientsByDoctorId(int doctorId) {
-    java.util.List<Lietotajs> patients = new java.util.ArrayList<>();
-
-
-String sql = "SELECT l.lietotaja_id, l.vards, l.uzvards, "
-        + "l.personas_kods_enc, l.loma "
-        + "FROM lietotajs l "
-        + "JOIN arsta_pacienta_saites a "
-        + "ON l.lietotaja_id = a.pacienta_id "
-        + "WHERE a.arsta_id = ? "
-        + "AND l.loma = 'Pacients' "
-        + "ORDER BY l.uzvards, l.vards";
-
-try (java.sql.Connection conn = db.DatabaseManager.getConnection();
-         java.sql.PreparedStatement ps = conn.prepareStatement(sql)) {
-
-
-try (java.sql.Statement st = conn.createStatement();
-     java.sql.ResultSet rs = st.executeQuery(
-             "SELECT COUNT(*) FROM arsta_pacienta_saites")) {
-    if (rs.next()) {
-        System.out.println(
-                "Saistibu skaits: " + rs.getInt(1));
-    }
-}
-    
-    ps.setInt(1, doctorId);
-    
-    try (java.sql.ResultSet rs = ps.executeQuery()){
-        while (rs.next()){
-            Lietotajs patient = new Lietotajs();
-            
-            patient.setId(rs.getInt("lietotaja_id"));
-            patient.setVards(rs.getString("vards"));
-            patient.setUzvards(rs.getString("uzvards"));
-            patient.setPersonasKodsEnc(
-            rs.getString("personas_kods_enc"));
-            patient.setLoma(rs.getString("loma"));
-            
-            
-            patients.add(patient);
-        }
-    }
-}catch(java.sql.SQLException e){
-    e.printStackTrace();
-}
-return patients;
-} 
 }
