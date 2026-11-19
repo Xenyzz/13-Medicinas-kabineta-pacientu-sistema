@@ -1,12 +1,12 @@
 ----------------------------------------------------------------
-Fri Nov 13 12:23:40 EET 2026:
-Booting Derby version The Apache Software Foundation - Apache Derby - 10.17.1.0 - (1913217): instance a816c00e-01a1-d46f-35c6-00000f9631c8 
-on database directory D:\PR-31 Salkovskis\13-Medicinas-kabineta-pacientu-sistema-master\database\med_db with class loader jdk.internal.loader.ClassLoaders$AppClassLoader@33909752 
-Loaded from file:/D:/PR-31%20Salkovskis/13-Medicinas-kabineta-pacientu-sistema-master/src/lib/derby.jar
-java.vendor=Oracle Corporation
-java.runtime.version=21.0.6+8-LTS-188
-user.dir=D:\PR-31 Salkovskis\13-Medicinas-kabineta-pacientu-sistema-master
-os.name=Windows 10
+Tue Nov 17 14:05:26 EET 2026:
+Booting Derby version The Apache Software Foundation - Apache Derby - 10.17.1.0 - (1913217): instance a816c00e-01a1-e965-d09e-00001dff0380 
+on database directory E:\13-Medicinas-kabineta-pacientu-sistema\database\med_db with class loader jdk.internal.loader.ClassLoaders$AppClassLoader@105be200 
+Loaded from file:/E:/13-Medicinas-kabineta-pacientu-sistema/src/lib/derby.jar
+java.vendor=Eclipse Adoptium
+java.runtime.version=25.0.1+8-LTS
+user.dir=E:\13-Medicinas-kabineta-pacientu-sistema
+os.name=Windows 11
 os.arch=amd64
 os.version=10.0
 derby.system.home=null

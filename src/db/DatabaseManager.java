@@ -5,9 +5,13 @@
 package db;
 
 /**
+ * Klase datubāzes pārvaldīšanai.
+ * Nodrošina savienojuma izveidi, tabulu inicializāciju,
+ * testa datu ievietošanu, dzēšanu un datubāzes apskati.
  *
  * @author Nikita.Sersts
  */
+
 import java.sql.*;
 import java.awt.BorderLayout;
 import javax.swing.JFrame;
@@ -24,6 +28,12 @@ public class DatabaseManager {
     private static final String URL
             = "jdbc:derby:database/med_db;create=true";
 
+    /**
+     * Izveido savienojumu ar datubāzi.
+     *
+     * @return aktīvs datubāzes savienojums
+     * @throws SQLException ja neizdodas izveidot savienojumu
+     */
     public static Connection getConnection() throws SQLException {
         return DriverManager.getConnection(URL);
     }
@@ -31,6 +41,13 @@ public class DatabaseManager {
     // =====================================================
     // 1. INIT - create tables only
     // =====================================================
+
+    /**
+     * Inicializē datubāzi, izveidojot nepieciešamās tabulas,
+     * ja tās vēl nepastāv.
+     * Tiek izveidotas lietotāju, ārstu un pacientu saišu,
+     * vizīšu, recepšu un diagnožu tabulas.
+     */
     public static void init() {
         try (Connection conn = getConnection(); Statement st = conn.createStatement()) {
 
@@ -110,6 +127,14 @@ public class DatabaseManager {
         }
     }
 
+    /**
+     * Pārbauda, vai norādītā tabula eksistē datubāzē.
+     *
+     * @param meta datubāzes metadati
+     * @param tableName pārbaudāmās tabulas nosaukums
+     * @return true, ja tabula eksistē, pretējā gadījumā false
+     * @throws SQLException ja rodas kļūda, pārbaudot tabulu
+     */
     private static boolean tableExists(
             DatabaseMetaData meta, String tableName) throws SQLException {
 
@@ -122,6 +147,13 @@ public class DatabaseManager {
     // =====================================================
     // 2. FILL - fill all tables, including admin
     // =====================================================
+
+    /**
+     * Aizpilda visas datubāzes tabulas ar testa datiem.
+     * Izveido administratora, ārstu un pacientu kontus,
+     * kā arī to saites, vizītes, receptes un diagnozes.
+     * Ja testa dati jau eksistē, ievietošana netiek veikta.
+     */
     public static void fillAllTables() {
         try (Connection conn = getConnection()) {
 
@@ -319,6 +351,19 @@ public class DatabaseManager {
         }
     }
 
+    /**
+     * Pievieno jaunu lietotāju datubāzē.
+     * Parole pirms saglabāšanas tiek pārveidota hash formā.
+     *
+     * @param ps sagatavotais SQL pieprasījums
+     * @param code lietotāja personas kods
+     * @param phone lietotāja tālruņa numurs
+     * @param password lietotāja parole
+     * @param firstName lietotāja vārds
+     * @param lastName lietotāja uzvārds
+     * @param role lietotāja loma
+     * @throws SQLException ja rodas kļūda, pievienojot lietotāju
+     */
     private static void addUser(
             PreparedStatement ps,
             String code,
@@ -337,6 +382,15 @@ public class DatabaseManager {
         ps.executeUpdate();
     }
 
+    /**
+     * Atrod lietotāja ID pēc vārda un uzvārda.
+     *
+     * @param conn datubāzes savienojums
+     * @param firstName lietotāja vārds
+     * @param lastName lietotāja uzvārds
+     * @return atrastā lietotāja ID
+     * @throws SQLException ja lietotājs nav atrasts vai rodas SQL kļūda
+     */
     private static int findUserId(
             Connection conn,
             String firstName,
@@ -361,6 +415,14 @@ public class DatabaseManager {
                 "User not found: " + firstName + " " + lastName);
     }
 
+    /**
+     * Pievieno saiti starp ārstu un pacientu.
+     *
+     * @param ps sagatavotais SQL pieprasījums
+     * @param doctorId ārsta unikālais ID
+     * @param patientId pacienta unikālais ID
+     * @throws SQLException ja rodas kļūda, pievienojot saiti
+     */
     private static void addLink(
             PreparedStatement ps, int doctorId, int patientId)
             throws SQLException {
@@ -370,6 +432,16 @@ public class DatabaseManager {
         ps.executeUpdate();
     }
 
+    /**
+     * Pievieno vizīti datubāzē.
+     *
+     * @param ps sagatavotais SQL pieprasījums
+     * @param doctorId ārsta unikālais ID
+     * @param patientId pacienta unikālais ID
+     * @param dateTime vizītes datums un laiks
+     * @param approved vizītes apstiprinājuma statuss
+     * @throws SQLException ja rodas kļūda, pievienojot vizīti
+     */
     private static void addVisit(
             PreparedStatement ps,
             int doctorId,
@@ -384,6 +456,16 @@ public class DatabaseManager {
         ps.executeUpdate();
     }
 
+    /**
+     * Pievieno recepti datubāzē.
+     *
+     * @param ps sagatavotais SQL pieprasījums
+     * @param patientId pacienta unikālais ID
+     * @param medicine medikamenta nosaukums
+     * @param description receptes apraksts
+     * @param date receptes izsniegšanas datums
+     * @throws SQLException ja rodas kļūda, pievienojot recepti
+     */
     private static void addPrescription(
             PreparedStatement ps,
             int patientId,
@@ -398,6 +480,15 @@ public class DatabaseManager {
         ps.executeUpdate();
     }
 
+    /**
+     * Pievieno diagnozi datubāzē.
+     *
+     * @param ps sagatavotais SQL pieprasījums
+     * @param patientId pacienta unikālais ID
+     * @param description diagnozes apraksts
+     * @param date diagnozes datums
+     * @throws SQLException ja rodas kļūda, pievienojot diagnozi
+     */
     private static void addDiagnosis(
             PreparedStatement ps,
             int patientId,
@@ -413,6 +504,12 @@ public class DatabaseManager {
     // =====================================================
     // 3. CLEAR - delete all table data, including admin
     // =====================================================
+
+    /**
+     * Dzēš visu datu saturu no datubāzes tabulām.
+     * Pirms dzēšanas lietotājam tiek parādīts apstiprinājuma logs.
+     * Pēc dzēšanas tiek atiestatīti tabulu ID skaitītāji.
+     */
     public static void clearAllTables() {
         int result = JOptionPane.showConfirmDialog(
                 null,
@@ -495,9 +592,15 @@ public class DatabaseManager {
     // =====================================================
     // 4. SHOW - view all tables
     // =====================================================
+
+    /**
+     * Atver datubāzes apskates logu.
+     * Katrā cilnē tiek parādīta viena datubāzes tabula
+     * ar tās ierakstiem un kolonnu nosaukumiem.
+     */
     public static void showDatabaseWindow() {
-        
-         JOptionPane.showMessageDialog(
+
+        JOptionPane.showMessageDialog(
                 null,
                 "Test accounts:\n"
                 + "Admin: admin / admin123\n"
@@ -505,7 +608,7 @@ public class DatabaseManager {
                 "Test accounts",
                 JOptionPane.INFORMATION_MESSAGE
         );
-         
+
         SwingUtilities.invokeLater(() -> {
             JFrame frame = new JFrame("Database Viewer");
             frame.setSize(1000, 600);

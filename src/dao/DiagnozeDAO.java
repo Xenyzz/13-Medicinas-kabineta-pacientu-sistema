@@ -8,6 +8,7 @@ package dao;
  *
  * @author Nikita.Sersts
  */
+
 import db.DatabaseManager;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -17,9 +18,20 @@ import java.util.ArrayList;
 import java.util.List;
 import model.Diagnoze;
 
+/**
+ * DAO klase diagnožu datu apstrādei.
+ * Nodrošina diagnožu pievienošanu, iegūšanu un atjaunināšanu datubāzē.
+ *
+ * @author Nikita.Sersts
+ */
 public class DiagnozeDAO {
 
-    // Pievieno diagnozi pacientam
+    /**
+     * Pievieno jaunu diagnozi konkrētam pacientam.
+     *
+     * @param diagnoze diagnozes objekts ar pacienta ID, aprakstu un datumu
+     * @return true, ja diagnoze tika veiksmīgi pievienota, pretējā gadījumā false
+     */
     public boolean add(Diagnoze diagnoze) {
 
         String sql = "INSERT INTO diagnozes "
@@ -46,7 +58,13 @@ public class DiagnozeDAO {
         }
     }
 
-    // Atgriež visas konkrētā pacienta diagnozes
+    /**
+     * Iegūst visas konkrētā pacienta diagnozes no datubāzes.
+     * Diagnozes tiek sakārtotas pēc datuma dilstošā secībā.
+     *
+     * @param pacientsId pacienta unikālais ID
+     * @return pacienta diagnožu saraksts
+     */
     public List<Diagnoze> getDiagnozesByPacientsId(int pacientsId) {
 
         List<Diagnoze> diagnozes = new ArrayList<>();
@@ -82,7 +100,12 @@ public class DiagnozeDAO {
         return diagnozes;
     }
 
-    // Atjaunina diagnozi
+    /**
+     * Atjaunina esošas diagnozes aprakstu un datumu.
+     *
+     * @param diagnoze diagnozes objekts ar atjaunināmajiem datiem
+     * @return true, ja diagnoze tika veiksmīgi atjaunināta, pretējā gadījumā false
+     */
     public boolean updateDiagnoze(Diagnoze diagnoze) {
 
         String sql = "UPDATE diagnozes "

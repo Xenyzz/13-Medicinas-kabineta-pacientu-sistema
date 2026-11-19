@@ -8,6 +8,7 @@ package dao;
  *
  * @author Nikita.Sersts
  */
+
 import db.DatabaseManager;
 import model.Recepte;
 
@@ -18,9 +19,22 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * DAO klase recepšu datu apstrādei.
+ * Nodrošina jaunu recepšu pievienošanu un
+ * recepšu iegūšanu konkrētam pacientam.
+ *
+ * @author Nikita.Sersts
+ */
 public class RecepteDAO {
 
-    // Pievieno jaunu recepti datubazei
+    /**
+     * Pievieno jaunu recepti datubāzē.
+     *
+     * @param recepte pievienojamās receptes objekts
+     * @return true, ja recepte tika veiksmīgi pievienota,
+     *         pretējā gadījumā false
+     */
     public boolean add(Recepte recepte) {
 
         String sql = "INSERT INTO receptes "
@@ -48,7 +62,14 @@ public class RecepteDAO {
         }
     }
 
-    // Atgriez visas receptes konkretam pacientam
+    /**
+     * Iegūst visas konkrētam pacientam izrakstītās receptes.
+     * Receptes tiek sakārtotas pēc izsniegšanas datuma
+     * dilstošā secībā.
+     *
+     * @param pacientsId pacienta unikālais ID
+     * @return pacienta recepšu saraksts
+     */
     public List<Recepte> getReceptesByPacientsId(int pacientsId) {
 
         List<Recepte> receptes = new ArrayList<>();

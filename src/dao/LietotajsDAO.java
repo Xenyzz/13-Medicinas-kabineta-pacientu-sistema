@@ -8,13 +8,31 @@ package dao;
  *
  * @author Nikita.Sersts
  */
+
 import db.DatabaseManager;
 import model.Lietotajs;
 import util.PasswordUtil;
 import java.sql.*;
 
+/**
+ * DAO klase lietotāju datu apstrādei.
+ * Nodrošina lietotāju reģistrāciju, autorizāciju,
+ * meklēšanu, dzēšanu un ārsta-pacienta saišu pārvaldību.
+ *
+ * @author Nikita.Sersts
+ */
 public class LietotajsDAO {
 
+    /**
+     * Reģistrē jaunu lietotāju datubāzē.
+     * Tiek pārbaudīta lietotāja loma, paroles garums
+     * un personas koda unikalitāte.
+     *
+     * @param lietotajs reģistrējamā lietotāja objekts
+     * @param password lietotāja parole
+     * @return true, ja lietotājs tika veiksmīgi reģistrēts,
+     *         pretējā gadījumā false
+     */
     public boolean register(Lietotajs lietotajs, String password) {
 
         String role = lietotajs.getLoma();
@@ -64,6 +82,13 @@ public class LietotajsDAO {
         }
     }
 
+    /**
+     * Atrod ārstu, kas ir piesaistīts konkrētam pacientam.
+     *
+     * @param pacientsId pacienta unikālais ID
+     * @return ārsta objekts, ja ārsts ir atrasts,
+     *         pretējā gadījumā null
+     */
     public Lietotajs findDoctorByPatientId(int pacientsId) {
         String sql
                 = "SELECT l.lietotaja_id, l.vards, l.uzvards, l.loma "
@@ -95,6 +120,14 @@ public class LietotajsDAO {
         return null;
     }
 
+    /**
+     * Autorizē lietotāju, pārbaudot personas kodu un paroli.
+     *
+     * @param personalCode lietotāja personas kods
+     * @param password lietotāja parole
+     * @return autorizētā lietotāja objekts, ja dati ir pareizi,
+     *         pretējā gadījumā null
+     */
     public Lietotajs login(String personalCode, String password) {
 
         String sql = "SELECT * FROM lietotajs WHERE personas_kods_enc = ?";
@@ -133,6 +166,13 @@ public class LietotajsDAO {
         return null;
     }
 
+    /**
+     * Atrod lietotāju pēc tā unikālā ID.
+     *
+     * @param id lietotāja unikālais ID
+     * @return atrastā lietotāja objekts, ja lietotājs eksistē,
+     *         pretējā gadījumā null
+     */
     public Lietotajs findById(int id) {
 
         String sql = "SELECT lietotaja_id, vards, uzvards, "
@@ -167,6 +207,16 @@ public class LietotajsDAO {
         return null;
     }
 
+    /**
+     * Dzēš lietotāju no datubāzes.
+     * Pirms lietotāja dzēšanas tiek dzēstas ar to saistītās
+     * vizītes, ārsta-pacienta saites, receptes un diagnozes.
+     * Administratoru dzēšana nav atļauta.
+     *
+     * @param userId dzēšamā lietotāja unikālais ID
+     * @return true, ja lietotājs tika veiksmīgi dzēsts,
+     *         pretējā gadījumā false
+     */
     public boolean deleteUserById(int userId) {
 
         String checkSql
@@ -179,7 +229,6 @@ public class LietotajsDAO {
 
             try {
 
-      
                 try (PreparedStatement ps = conn.prepareStatement(checkSql)) {
 
                     ps.setInt(1, userId);
@@ -207,7 +256,6 @@ public class LietotajsDAO {
                     ps.setInt(2, userId);
                     ps.executeUpdate();
                 }
-
 
                 String linksSql
                         = "DELETE FROM arsta_pacienta_saites "
@@ -266,6 +314,16 @@ public class LietotajsDAO {
         }
     }
 
+    /**
+     * Piešķir ārstu konkrētam pacientam.
+     * Tiek pārbaudīts, vai pacients un ārsts eksistē
+     * un vai pacientam jau nav piešķirts ārsts.
+     *
+     * @param pacientsId pacienta unikālais ID
+     * @param arstsId ārsta unikālais ID
+     * @return true, ja ārsts tika veiksmīgi piešķirts pacientam,
+     *         pretējā gadījumā false
+     */
     public boolean assignDoctorToPatient(int pacientsId, int arstsId) {
 
         String patientSql
@@ -334,6 +392,13 @@ public class LietotajsDAO {
         }
     }
 
+    /**
+     * Atrod visus lietotājus ar norādīto lomu.
+     * Rezultāti tiek sakārtoti pēc uzvārda un vārda.
+     *
+     * @param role lietotāja loma
+     * @return lietotāju saraksts ar norādīto lomu
+     */
     public java.util.List<Lietotajs> findUsersByRole(String role) {
         java.util.List<Lietotajs> users = new java.util.ArrayList<>();
 
@@ -367,6 +432,13 @@ public class LietotajsDAO {
         return users;
     }
 
+    /**
+     * Iegūst visus pacientus, kas ir piesaistīti konkrētam ārstam.
+     * Pacienti tiek sakārtoti pēc uzvārda un vārda.
+     *
+     * @param doctorId ārsta unikālais ID
+     * @return ārstam piesaistīto pacientu saraksts
+     */
     public java.util.List<Lietotajs> getPatientsByDoctorId(int doctorId) {
         java.util.List<Lietotajs> patients = new java.util.ArrayList<>();
 
@@ -405,12 +477,20 @@ public class LietotajsDAO {
                     patients.add(patient);
                 }
             }
+
         } catch (java.sql.SQLException e) {
             e.printStackTrace();
         }
+
         return patients;
     }
 
+    /**
+     * Iegūst visus lietotājus no datubāzes.
+     * Lietotāji tiek sakārtoti pēc uzvārda un vārda.
+     *
+     * @return visu lietotāju saraksts
+     */
     public java.util.List<Lietotajs> getAllUsers() {
 
         java.util.List<Lietotajs> users = new java.util.ArrayList<>();

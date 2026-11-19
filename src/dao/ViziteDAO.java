@@ -8,6 +8,7 @@ package dao;
  *
  * @author Nikita.Sersts
  */
+
 import db.DatabaseManager;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -20,8 +21,22 @@ import java.util.Date;
 import java.util.List;
 import model.Vizite;
 
+/**
+ * DAO klase vizīšu datu apstrādei.
+ * Nodrošina vizīšu iegūšanu, pievienošanu, apstiprināšanu
+ * un atcelšanu, kā arī ārsta pieejamības pārbaudi.
+ *
+ * @author Nikita.Sersts
+ */
 public class ViziteDAO {
 
+    /**
+     * Iegūst visas konkrētā pacienta vizītes.
+     * Vizītes tiek sakārtotas pēc datuma un laika augošā secībā.
+     *
+     * @param pacientsId pacienta unikālais ID
+     * @return pacienta vizīšu saraksts
+     */
     public List<Vizite> getVisitsByPatientId(int pacientsId) {
         List<Vizite> visits = new ArrayList<>();
 
@@ -57,6 +72,13 @@ public class ViziteDAO {
         return visits;
     }
 
+    /**
+     * Iegūst visas konkrētā ārsta vizītes.
+     * Vizītes tiek sakārtotas pēc datuma un laika augošā secībā.
+     *
+     * @param arstsId ārsta unikālais ID
+     * @return ārsta vizīšu saraksts
+     */
     public List<Vizite> getVisitsByDoctorId(int arstsId) {
         List<Vizite> visits = new ArrayList<>();
 
@@ -92,6 +114,13 @@ public class ViziteDAO {
         return visits;
     }
 
+    /**
+     * Iegūst visus datumus, kuros konkrētajam ārstam ir ieplānotas vizītes.
+     * Iegūtajiem datumiem tiek noņemta informācija par laiku.
+     *
+     * @param arstsId ārsta unikālais ID
+     * @return aizņemto datumu saraksts
+     */
     public List<Date> getOccupiedDates(int arstsId) {
         List<Date> dates = new ArrayList<>();
 
@@ -124,6 +153,14 @@ public class ViziteDAO {
         return dates;
     }
 
+    /**
+     * Pārbauda, vai konkrētajam ārstam izvēlētajā datumā nav ieplānota vizīte.
+     *
+     * @param arstsId ārsta unikālais ID
+     * @param datums pārbaudāmais datums
+     * @return true, ja datumā nav ieplānotu vizīšu,
+     *         pretējā gadījumā false
+     */
     public boolean isDateAvailable(int arstsId, Date datums) {
         if (datums == null) {
             return false;
@@ -163,6 +200,17 @@ public class ViziteDAO {
         return false;
     }
 
+    /**
+     * Pievieno jaunu vizīti datubāzē.
+     * Tiek pārbaudīts, vai pacients ir piesaistīts ārstam,
+     * vai izvēlētais datums ir nākotnē un vai ārstam tajā dienā
+     * nav ieplānota cita vizīte.
+     * Vizīte tiek izveidota ar neapstiprinātu statusu.
+     *
+     * @param vizite pievienojamās vizītes objekts
+     * @return true, ja vizīte tika veiksmīgi pievienota,
+     *         pretējā gadījumā false
+     */
     public boolean addVizite(Vizite vizite) {
         if (vizite == null || vizite.getDatumsLaiks() == null) {
             return false;
@@ -266,6 +314,14 @@ public class ViziteDAO {
         }
     }
 
+    /**
+     * Iegūst konkrētā pacienta iepriekšējo vizīšu informāciju.
+     * Katras vizītes dati ietver laiku, datumu un ārsta vārdu.
+     * Rezultāti tiek sakārtoti pēc datuma dilstošā secībā.
+     *
+     * @param pacientsId pacienta unikālais ID
+     * @return iepriekšējo vizīšu saraksts ar laiku, datumu un ārsta vārdu
+     */
     public List<Object[]> getPastVisitsByPatientId(int pacientsId) {
         List<Object[]> visits = new ArrayList<>();
 
@@ -305,6 +361,16 @@ public class ViziteDAO {
         return visits;
     }
 
+    /**
+     * Atceļ pacienta gaidāmo vizīti.
+     * Vizīte tiek dzēsta tikai tad, ja tā pieder norādītajam pacientam
+     * un tās datums vēl nav pienācis.
+     *
+     * @param viziteId atceļamās vizītes unikālais ID
+     * @param pacientsId pacienta unikālais ID
+     * @return true, ja vizīte tika veiksmīgi atcelta,
+     *         pretējā gadījumā false
+     */
     public boolean cancelUpcomingVisit(int viziteId, int pacientsId) {
         String sql = "DELETE FROM vizites "
                 + "WHERE vizites_id = ? "
@@ -324,6 +390,16 @@ public class ViziteDAO {
         }
     }
 
+    /**
+     * Apstiprina konkrētu vizīti.
+     * Vizīti var apstiprināt tikai tās ārsts,
+     * ja vizīte vēl nav apstiprināta un tās datums ir nākotnē.
+     *
+     * @param viziteId apstiprināmās vizītes unikālais ID
+     * @param arstsId ārsta unikālais ID
+     * @return true, ja vizīte tika veiksmīgi apstiprināta,
+     *         pretējā gadījumā false
+     */
     public boolean confirmVisit(int viziteId, int arstsId) {
         String sql = "UPDATE vizites "
                 + "SET ir_apstiprinats = TRUE "
